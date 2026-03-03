@@ -1,0 +1,75 @@
+let
+  disk1 = "/dev/nvme0n1";
+  disk2 = "/dev/nvme1n1";
+  #disk3 = "/dev/nvme2n1";
+in
+{
+  disko.devices = {
+    disk = {
+      ${disk1} = {
+        device = "${disk1}";
+        type = "disk";
+        content = {
+          type = "gpt";
+          partitions = {
+            ESP = {
+              label = "EFI";
+              name = "ESP";
+              size = "1024M";
+              type = "EF00" ;
+              content = {
+                type = "filesystem";
+                format = "vfat";
+                mountpoint = "/boot";
+              };
+            };
+            luks = {
+              size = "100%";
+              label = "luks";
+              content = {
+                type = "luks";
+                name = "cryptroot";
+                content = {
+                  type = "btrfs";
+                  extraArgs = [ "-f" "-m raid1 -d raid1" "${disk2}" ];
+                  subvolumes = {
+                    "/root" = {
+                      mountpoint = "/";
+                      mountOptions = [ "subvol=root" "compress=zstd" "noatime" ];
+                    };
+                    "/home" = {
+                      mountpoint = "/home";
+                      mountOptions = [ "subvol=home" "compress=zstd" "noatime" ];
+                    };
+                    "/nix" = {
+                      mountpoint = "/nix";
+                      mountOptions = [ "subvol=nix" "compress=zstd" "noatime" ];
+                    };
+                    "/persist" = {
+                      mountpoint = "/persist";
+                      mountOptions = [ "subvol=persist" "compress=zstd" "noatime" ];
+                    };
+                    "/persist/snapshots" = {
+                      mountpoint = "/persist/.snapshots";
+                      mountOptions = [ "subvol=snapshots" "compress=zstd" "noatime" ];
+                    };
+                    "/lib" = {
+                      mountpoint = "/var/lib";
+                      mountOptions = [ "subvol=lib" "compress=zstd" "noatime" ];
+                    };
+                    "/log" = {
+                      mountpoint = "/var/log";
+                      mountOptions = [ "subvol=log" "compress=zstd" "noatime" ];
+                    };
+                  };
+                };
+              };
+            };
+          };
+        };
+      };
+    };
+    fileSystems."/persist".neededForBoot = true;
+    fileSystems."/var/log".neededForBoot = true;
+    fileSystems."/var/lib".neededForBoot = true;
+}
