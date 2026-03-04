@@ -6,7 +6,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "sevii01";
+  networking.hostName = "kanto";
 
   time.timeZone = "America/Chicago";
 
