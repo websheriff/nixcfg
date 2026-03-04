@@ -1,8 +1,8 @@
 {
   age = {
     secrets = {
-      secret1 = {
-        file = ../../secrets/secret1.age;
+      secret-newtMC = {
+        file = ../../secrets/newtMC.age;
       };
     };
   };

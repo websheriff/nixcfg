@@ -48,9 +48,9 @@
        #   ];
        # };
       #};
-      nixosConfigurations {
+      nixosConfigurations = {
         sevii01 = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs };
+          specialArgs = { inherit inputs outputs; };
           modules = [
             ./hosts/sevii01
             disko.nixosModules.disko

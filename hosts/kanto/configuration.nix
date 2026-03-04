@@ -5,25 +5,6 @@
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.initrd.luks.devices {
-    cryptroot = {
-      device = "/dev/disk/by-partlabel/luks";
-      allowDiscard = true;
-    };
-  };
-  boot = {
-    tmp = {
-      useTmpfs = true;
-      tmpfsSize = "50%";
-    };
-  };
-
-  zramSwap = {
-    enable = true;
-    algorithm = "zstd";
-    priority = 5;
-    memoryPercent = 50;
-  };
 
   networking.hostName = "sevii01";
 
@@ -43,8 +24,7 @@
     wget
     git
     ghostty
-    k3s
-    nfs-utils
+    fosrl-newt
   ];
   environment.variables.EDITOR = "nvim";
 
@@ -63,20 +43,6 @@
           Name = "vlan5";
         };
         vlanConfig.Id = 5;
-      };
-      "20-vlan30" = {
-        netdevConfig = {
-          Kind = "vlan";
-          Name = "vlan30";
-        };
-        vlanConfig.Id = 30;
-      };
-      "20-vlan40" = {
-        netdevConfig = {
-          Kind = "vlan";
-          Name = "vlan40";
-        };
-        vlanConfig.Id = 40;
       };
       "20-vlan50" = {
         netdevConfig = {
@@ -98,7 +64,7 @@
       "10-eno1" = {
         enable = true;
         matchConfig.Name = "eno1";
-        address = [ "10.5.5.10/24" ];
+        address = [ "10.5.5.15/24" ];
         gateway = [ "10.5.5.1" ];
         dns = [ "10.5.5.1" ];
         vlan = [
@@ -106,16 +72,6 @@
           "vlan100"
         ];
         networkConfig.LinkLocalAddressing = "no";
-        linkConfig.RequiredForOnline = "no";
-      };
-      "30-vlan30" = {
-        matchConfig.Name = "vlan30";
-        DHCP = "ipv4";
-        linkConfig.RequiredForOnline = "no";
-      };
-      "30-vlan40" = {
-        matchConfig.Name = "vlan40";
-        DHCP = "ipv4";
         linkConfig.RequiredForOnline = "no";
       };
       "30-vlan50" = {
@@ -134,40 +90,58 @@
   networking.nftables.enable = true;
 
   networking.firewall.allowedTCPPorts = [ 
-    6443 #k3s
-  # 2379 #k3s etcd clients
-  # 2380 #k3s etcd peers
+    25565
   ];
   networking.firewall.allowedUDPPorts = [
-    # 8472 #k3s flannel
-  ];
-
-  services.xserver.videoDrivers = [ "i915" ];
-
-  services.btrfs.autoScrub = {
-    enable = true;
-    interval = "weekly";
-    fileSystems = [ "/" ];
-  };
-
-  services.openssh.enable = true;
-
-  services.k3s = {
-    enable = true;
-    role = "server";
-    extraFlags = toString = [
-      # "--debug"
-    ];
-  };
-  services.openiscsi = {
-    enable = true;
-    name = "${config.networking.hostName}-initiatorhost";
-  };
-  #Longhorn fix
-  systemd.tmpfiles.rules = [
-    "L+ /usr/local/bin - - - - /run/current-system/sw/bin/"
   ];
   
+  services.openssh.enable = true;
+
+  hardware.graphics.enable = true;
+  services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.nvidia = {
+    modesetting.enable = true;
+
+    powerManagement.enable = false;
+    powerManagement.finegrained = false;
+
+    open = true;
+
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+  };
+
+  services.minecraft-servers = {
+    enable = true;
+    eula = true;
+    openFirewall = true;
+
+    servers.vanilla-latest = {
+      enable = true;
+      autoStart = true;
+      jvmOpts = "-Xmx6G -Xms6G";
+
+      package = pkgs.paperServers.paper;
+
+      serverProperties = {
+        difficulty = 2;
+        gamemode = 0;
+        white-list = true;
+      };
+      operators = {
+        supreme_loser = "3443b3e3-709b-4e9c-bc70-50806be0eb30";
+      };
+      whitelist = {
+        supreme_loser = "3443b3e3-709b-4e9c-bc70-50806be0eb30";
+        BrockyDiesel = "b866d032-84f1-4ce2-a221-d659901c4757";
+      };
+    };
+  };
+
+  services.newt = {
+    enable = true;
+    environmentFile = config.age.secrets.secret-newtMC.path;
+  };
+
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   system.stateVersion = "25.11";
 
