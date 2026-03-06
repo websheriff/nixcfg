@@ -37,6 +37,9 @@ in
                       mountpoint = "/";
                       mountOptions = [ "subvol=root" "compress=zstd" "noatime" ];
                     };
+                    "/root-clean" = {
+                      mountOptions = [ "subvol=root-clean" "nodatacow" "noatime" ];
+                    };
                     "/home" = {
                       mountpoint = "/home";
                       mountOptions = [ "subvol=home" "compress=zstd" "noatime" ];
@@ -69,7 +72,8 @@ in
         };
       };
     };
-    fileSystems."/persist".neededForBoot = true;
-    fileSystems."/var/log".neededForBoot = true;
-    fileSystems."/var/lib".neededForBoot = true;
+  };
+  fileSystems."/persist".neededForBoot = true;
+  fileSystems."/var/log".neededForBoot = true;
+  fileSystems."/var/lib".neededForBoot = true;
 }

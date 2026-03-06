@@ -7,6 +7,7 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    impermanence.url = "github:nix-community/impermanence";
 		home-manager = {
 			url = "github:nix-community/home-manager";
 			inputs.nixpkgs.follows = "nixpkgs";
@@ -17,7 +18,7 @@
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
 	};
 
-	outputs = { self, quadlet-nix, agenix, flake-parts, nixpkgs, disko, home-manager, ... }@inputs:
+	outputs = { self, quadlet-nix, agenix, flake-parts, nixpkgs, disko, impermanence, home-manager, ... }@inputs:
     let
       inherit (self) outputs;
       systems = [
@@ -52,6 +53,7 @@
           modules = [
             ./hosts/sevii01
             disko.nixosModules.disko
+            impermanence.nixosModules.impermanence
             agenix.nixosModules.default
           ];
         };

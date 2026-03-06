@@ -5,10 +5,11 @@
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.initrd.luks.devices {
+  boot.initrd.luks.devices = {
     cryptroot = {
       device = "/dev/disk/by-partlabel/luks";
-      allowDiscard = true;
+      allowDiscards = true;
+      preLVM = true;
     };
   };
   boot = {
@@ -31,22 +32,22 @@
 
   users.users.websheriff = {
       isNormalUser = true;
-      extraGroups = [ "wheel" "minecraft" ];
-      packages = with pkgs; [
-        tree
-	      neovim
-      ];
+      extraGroups = [ "wheel" ];
+      initialHashedPassword = "$y$j9T$XJAqbwXPCK7MqJ4ORUqFX/$R9IeVyZOIJneIZDAmsWBdeOgQ2QkBlD1GdW.FUd6uz2";
+      packages = with pkgs; [];
     };
+  users.groups.websheriff = {};
 
   environment.systemPackages = with pkgs; [
-    vim
-    wget
+    helix
+    #vim
+    #wget
     git
     ghostty
     k3s
     nfs-utils
   ];
-  environment.variables.EDITOR = "nvim";
+  environment.variables.EDITOR = "hx";
 
   networking = {
     usePredictableInterfaceNames = true;
@@ -155,13 +156,16 @@
   services.k3s = {
     enable = true;
     role = "server";
-    extraFlags = toString = [
+    extraFlags = toString [
+      "--write-kubeconfig-mode \"0644\""
+      "--disable servicelb"
+      "--disable local-storage"
       # "--debug"
     ];
   };
   services.openiscsi = {
     enable = true;
-    name = "${config.networking.hostName}-initiatorhost";
+    name = "iqn.2024-11.xyz.002042:sevii01";
   };
   #Longhorn fix
   systemd.tmpfiles.rules = [
