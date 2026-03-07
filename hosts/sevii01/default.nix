@@ -5,6 +5,7 @@
     ./hardware-configuration.nix
     ./disk-config.nix
     #./impermanence.nix
+    ./secrets.nix
   ];
 
   nixpkgs.config.allowUnfree = true;

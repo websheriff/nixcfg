@@ -33,13 +33,15 @@
   users.users.websheriff = {
       isNormalUser = true;
       extraGroups = [ "wheel" ];
-      initialHashedPassword = config.age.secrets.websheriffHash.path;
+      initialHashedPassword = config.age.secrets.secret-websheriffHash.path;
       packages = with pkgs; [];
     };
   users.groups.websheriff = {};
 
   environment.systemPackages = with pkgs; [
     helix
+    nil
+    nixfmt
     #vim
     #wget
     git
