@@ -16,13 +16,17 @@
 			url = "github:nix-community/home-manager";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
+		sops-nix = {
+		  url = "github:Mic92/sops-nix";
+		  inputs.nixpkgs.follows = "nixpkgs";
+		};
     flake-parts.url = "github:hercules-ci/flake-parts";
     agenix.url = "github:ryantm/agenix";
     quadlet-nix.url = "github:SEIAROTg/quadlet-nix";
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
 	};
 
-	outputs = { self, quadlet-nix, agenix, flake-parts, nixpkgs, disko, impermanence, home-manager, ... }@inputs:
+	outputs = { self, quadlet-nix, agenix, sops-nix, flake-parts, nixpkgs, disko, impermanence, home-manager, ... }@inputs:
     let
       inherit (self) outputs;
       systems = [
@@ -40,6 +44,7 @@
 				    ./hosts/kanto
             agenix.nixosModules.default
             quadlet-nix.nixosModules.quadlet
+            sops-nix.nixosModules.sops
 			    ];
 		    };
 	    };
@@ -59,6 +64,7 @@
             disko.nixosModules.disko
             impermanence.nixosModules.impermanence
             agenix.nixosModules.default
+            sops-nix.nixosModules.sops
           ];
         };
       };
