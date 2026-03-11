@@ -8,4 +8,4 @@ instance:
     ref: refs/heads/main
     patch: kubernetes/flux
     interval: 2m
-    pullSecret:
+    pullSecret: "flux-git-auth"
