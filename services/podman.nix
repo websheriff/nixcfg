@@ -1,7 +1,10 @@
-{ config, lib, pkgs, ... }: 
+{ config, lib, pkgs, inputs, ... }: 
 with lib; let
   cfg = config.extraServices.podman;
 in {
+  
+  imports = [ inputs.quadlet-nix.nixosModules.quadlet ];
+
   options.extraServices.podman.enable = mkEnableOption "enable podman";
 
   config = mkIf cfg.enable {

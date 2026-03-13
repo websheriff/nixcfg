@@ -13,7 +13,7 @@
       inputs.home-manager.follows = "home-manager";
     };
 		home-manager = {
-			url = "github:nix-community/home-manager";
+			url = "github:nix-community/home-manager/release-25.11";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 		sops-nix = {
@@ -24,9 +24,24 @@
     agenix.url = "github:ryantm/agenix";
     quadlet-nix.url = "github:SEIAROTg/quadlet-nix";
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
+    niri.url = "github:sodiboo/niri-flake";
+    dms = {
+      url = "github:AvengeMedia/DankMaterialShell/stable";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 	};
 
-	outputs = { self, quadlet-nix, agenix, sops-nix, flake-parts, nixpkgs, disko, impermanence, home-manager, ... }@inputs:
+	outputs = {
+	  self,
+	  agenix,
+	  sops-nix,
+	  flake-parts,
+	  nixpkgs,
+	  nixpkgs-unstable,
+	  disko,
+	  impermanence,
+	  home-manager,
+	  ... }@inputs:
     let
       inherit (self) outputs;
       systems = [
@@ -43,19 +58,18 @@
 			    modules = [
 				    ./hosts/kanto
             agenix.nixosModules.default
-            quadlet-nix.nixosModules.quadlet
             sops-nix.nixosModules.sops
 			    ];
 		    };
 	    };
-      #nixosConfigurations = {
-       # charizard = nixpkgs-unstable.lib.nixosSystem {
-       #   specialArgs = { inherit inputs outputs };
-       #   modules = [
-       #     ./hosts/charizard
-       #   ];
-       # };
-      #};
+      nixosConfigurations = {
+        charizard = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+          modules = [
+            ./hosts/charizard
+          ];
+        };
+      };
       nixosConfigurations = {
         sevii01 = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
@@ -68,21 +82,35 @@
           ];
         };
       };
-      homeConfigurations = {
-        "websheriff@kanto" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages."x86_64-linux";
-          extraSpecialArgs = { inherit inputs outputs; };
-          modules = [
-            ./home/websheriff/home.nix
-          ];
-        };
-        "aiRunner@kanto" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages."x86_64-linux";
-          extraSpecialArgs = { inherit inputs outputs; };
-          modules = [
-            ./home/aiRunner/home.nix
-          ];
-        };
-      };
+#      homeConfigurations = {
+#        "websheriff@charizard" = home-manager.lib.homeManagerConfiguration {
+#          pkgs = nixpkgs-unstable.legacyPackages."x86_64-linux";
+#          extraSpecialArgs = { inherit inputs outputs; };
+#          modules = [
+#            ./home/websheriff/home.nix
+#          ];
+#        };
+#        "websheriff@kanto" = home-manager.lib.homeManagerConfiguration {
+#          pkgs = nixpkgs.legacyPackages."x86_64-linux";
+#          extraSpecialArgs = { inherit inputs outputs; };
+#          modules = [
+#            ./home/websheriff/home.nix
+#          ];
+#        };
+#        "aiRunner@kanto" = home-manager.lib.homeManagerConfiguration {
+#          pkgs = nixpkgs.legacyPackages."x86_64-linux";
+#          extraSpecialArgs = { inherit inputs outputs; };
+#          modules = [
+#            ./home/aiRunner/home.nix
+#          ];
+#        };
+#        "websheriff@sevii01" = home-manager.lib.homeManagerConfiguration {
+#          pkgs = nixpkgs.legacyPackages."x86_64-linux";
+#          extraSpecialArgs = { inherit inputs outputs; };
+#          modules = [
+#            ./home/websheriff/home.nix
+#          ];
+#        };
+#      };
     };
 }

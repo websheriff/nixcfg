@@ -48,13 +48,13 @@ in
   sops.secrets.websheriff-password.neededForUsers = true;
   users.mutableUsers = false;
 
-  users.users.websheriff = {
-      isNormalUser = true;
-      extraGroups = [ "wheel" ];
-      hashedPasswordFile = config.sops.secrets.websheriff-password.path;
-      packages = with pkgs; [];
-    };
-  users.groups.websheriff = {};
+#  users.users.websheriff = {
+#      isNormalUser = true;
+#      extraGroups = [ "wheel" ];
+#      hashedPasswordFile = config.sops.secrets.websheriff-password.path;
+#      packages = with pkgs; [];
+#    };
+#  users.groups.websheriff = {};
 
   environment.systemPackages = with pkgs; [
     age
@@ -72,6 +72,7 @@ in
     custom-kubernetes-helm
     custom-helmfile
     yazi
+    just
   ];
   environment.variables = {
     EDITOR = "hx";
@@ -192,38 +193,39 @@ in
       "--flannel-backend none"
       # "--debug"
     ];
-    autoDeployCharts = {
-      cilium = {
-        name = "cilium";
-        targetNamespace = "kube-system";
-        repo = "oci://quay.io/cilium/charts/cilium";
-        version = "1.19.1";
-        values = ../common/optional/ervices/k3s/core/networking/cilium/operator/helm-values.yaml;
-      };
-      coredns = {
-        name = "coredns";
-        targetNamespace = "kube-system";
-        repo = "oci://ghcr.io/coredns/charts/coredns";
-        version = "1.45.2";
-        values = ../common/optional/services/k3s/core/networking/coredns/app/helm-values.yaml;
-      };
-      flux-operator = {
-        name = "flux-operator";
-        targetNamespace = "flux-system";
-        repo = "oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator";
-        version = "0.43.0";
-      };
-      flux-instance = {
-        name = "flux-instance";
-        targetNamespace = "flux-system";
-        repo = "oci://ghcr.io/controlplaneio-fluxcd/charts/flux-instance";
-        version = "0.43.0";
-        values = ../common/optional/k3s/core/gitops/flux-instance/app/helm-values.yaml;
-        extraDeploy = [
-          ../common/optional/services/k3s/config/settings/flux.yaml
-        ];
-      };
-    };
+#    autoDeployCharts = {
+#      cilium = {
+#        name = "cilium";
+#        targetNamespace = "kube-system";
+#        repo = "oci://quay.io/cilium/charts/cilium";
+#        version = "1.19.1";
+#        values = ../common/optional/services/k3s/core/networking/cilium/operator/helm-values.yaml;
+#      };
+#      coredns = {
+#        name = "coredns";
+#        targetNamespace = "kube-system";
+#        repo = "oci://ghcr.io/coredns/charts/coredns";
+#        version = "1.45.2";
+#        values = ../common/optional/services/k3s/core/networking/coredns/app/helm-values.yaml;
+#      };
+#      flux-operator = {
+#        name = "flux-operator";
+#        targetNamespace = "flux-system";
+#        repo = "oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator";
+#        version = "0.44.0";
+#      };
+#      flux-instance = {
+#        name = "flux-instance";
+#        targetNamespace = "flux-system";
+#        repo = "oci://ghcr.io/controlplaneio-fluxcd/charts/flux-instance";
+#        version = "0.44.0";
+#        hash = "sha256-OFfc3gWbII696tcLS1I8cLre4MNcbFuzpFreQfgxEDCQ=";
+#        values = ../common/optional/services/k3s/core/gitops/flux-instance/app/helm-values.yaml;
+#        extraDeploy = [
+#          ../common/optional/services/k3s/config/settings/flux.yaml
+#        ];
+#      };
+#    };
   };
 #  environment.etc."k3s/helmfile.yaml" = {
 #    mode = "0750";

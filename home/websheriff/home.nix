@@ -3,6 +3,13 @@
 {
 	home.username = "websheriff";
 	home.homeDirectory = "/home/${config.home.username}";
+	home.stateVersion = "25.11";
+	home.packages = with pkgs; [
+		
+	];
+	
+	programs.home-manager.enable = true;
+	
 	programs.git = {
 		enable = true;
 		settings = {
@@ -13,18 +20,4 @@
 			init.defaultBranch = "master";
 		};
 	};
-	home.stateVersion = "25.11";
-
-	home.file.".config/nvim".source = ../common/config/nvim;
-
-	home.packages = with pkgs; [
-		git
-    neovim
-		ripgrep
-		nil
-		nixpkgs-fmt
-		nodejs
-		gcc
-	];
-
 }

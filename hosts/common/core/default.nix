@@ -1,4 +1,4 @@
-{ ... }: {
+{ config, pkgs, lib, ... }: {
   imports = [
     ./sops.nix
     ./fish.nix
@@ -12,5 +12,5 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  #home-manager.useGlobalPkgs = true;
+  home-manager.useGlobalPkgs = true;
 }

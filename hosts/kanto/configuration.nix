@@ -15,14 +15,14 @@ in
 
   time.timeZone = "America/Chicago";
 
-  users.users.websheriff = {
-      isNormalUser = true;
-      extraGroups = [ "wheel" "minecraft" ];
-      packages = with pkgs; [
-        tree
-	      neovim
-      ];
-    };
+#  users.users.websheriff = {
+#      isNormalUser = true;
+#      extraGroups = [ "wheel" "minecraft" ];
+#      packages = with pkgs; [
+#        tree
+#	      neovim
+#      ];
+#    };
 
   environment.systemPackages = with pkgs; [
     vim

@@ -1,7 +1,7 @@
 let
   disk1 = "/dev/nvme0n1";
   disk2 = "/dev/nvme1n1";
-  #disk3 = "dev/sda";
+  #disk3 = "/dev/nvme2n1";
 in
 {
   disko.devices = {
@@ -37,6 +37,9 @@ in
                       mountpoint = "/";
                       mountOptions = [ "subvol=root" "compress=zstd" "noatime" ];
                     };
+                    "/root-clean" = {
+                      mountOptions = [ "subvol=root-clean" "nodatacow" "noatime" ];
+                    };
                     "/home" = {
                       mountpoint = "/home";
                       mountOptions = [ "subvol=home" "compress=zstd" "noatime" ];
@@ -69,7 +72,8 @@ in
         };
       };
     };
-    fileSystems."/persist".neededForBoot = true;
-    fileSystems."/var/log".neededForBoot = true;
-    fileSystems."/var/lib".neededForBoot = true;
+  };
+  fileSystems."/persist".neededForBoot = true;
+  fileSystems."/var/log".neededForBoot = true;
+  fileSystems."/var/lib".neededForBoot = true;
 }
