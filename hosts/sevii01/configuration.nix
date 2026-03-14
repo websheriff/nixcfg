@@ -73,6 +73,7 @@ in
     custom-helmfile
     yazi
     just
+    wget
   ];
   environment.variables = {
     EDITOR = "hx";

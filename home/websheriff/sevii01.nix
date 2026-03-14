@@ -9,6 +9,7 @@
     cli = {
       fish.enable = false;
       nushell.enable = true;
+      starship.enable = true;
     };
   };
 }
