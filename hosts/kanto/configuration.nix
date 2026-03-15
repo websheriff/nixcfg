@@ -138,6 +138,7 @@ in
       whitelist = {
         supreme_loser = "3443b3e3-709b-4e9c-bc70-50806be0eb30";
         BrockyDiesel = "b866d032-84f1-4ce2-a221-d659901c4757";
+        Kaizar24 = "9fce7d5b-9343-4329-8718-762f1e5da9c6";
       };
     };
   };
