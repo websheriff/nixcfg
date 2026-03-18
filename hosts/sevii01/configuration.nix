@@ -77,6 +77,7 @@ in
   ];
   environment.variables = {
     EDITOR = "hx";
+    KUBECONFIG = "/etc/rancher/k3s/k3s.yaml";
   };
 
   networking = {
@@ -184,81 +185,23 @@ in
     role = "server";
     extraFlags = toString [
       "--write-kubeconfig-mode \"0644\""
-      "--disable-network-policy"
-      "--disable-kube-proxy"
       "--disable servicelb"
       "--disable local-storage"
       "--disable traefik"
       "--disable coredns"
       "--disable metrics-server"
-      "--flannel-backend none"
       # "--debug"
     ];
-#    autoDeployCharts = {
-#      cilium = {
-#        name = "cilium";
-#        targetNamespace = "kube-system";
-#        repo = "oci://quay.io/cilium/charts/cilium";
-#        version = "1.19.1";
-#        values = ../common/optional/services/k3s/core/networking/cilium/operator/helm-values.yaml;
-#      };
-#      coredns = {
-#        name = "coredns";
-#        targetNamespace = "kube-system";
-#        repo = "oci://ghcr.io/coredns/charts/coredns";
-#        version = "1.45.2";
-#        values = ../common/optional/services/k3s/core/networking/coredns/app/helm-values.yaml;
-#      };
-#      flux-operator = {
-#        name = "flux-operator";
-#        targetNamespace = "flux-system";
-#        repo = "oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator";
-#        version = "0.44.0";
-#      };
-#      flux-instance = {
-#        name = "flux-instance";
-#        targetNamespace = "flux-system";
-#        repo = "oci://ghcr.io/controlplaneio-fluxcd/charts/flux-instance";
-#        version = "0.44.0";
-#        hash = "sha256-OFfc3gWbII696tcLS1I8cLre4MNcbFuzpFreQfgxEDCQ=";
-#        values = ../common/optional/services/k3s/core/gitops/flux-instance/app/helm-values.yaml;
-#        extraDeploy = [
-#          ../common/optional/services/k3s/config/settings/flux.yaml
-#        ];
-#      };
-#    };
+    autoDeployCharts.fluxcd = {
+      enable = true;
+      name = "flux-operator";
+      targetNamespace = "flux-system";
+      createNamespace = true;
+      repo = "oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator";
+      hash = "sha256-ARdPpknA/idanpwnA1T97igTSFeGFm2HJYXx+LP5Tsc=";
+      version = "0.44.0";
+    };
   };
-#  environment.etc."k3s/helmfile.yaml" = {
-#    mode = "0750";
-#    text = ''
-#      releases:
-#        - name: cilium
-#          namespace: kube-system
-#          chart: oci://quay.io/cilium/charts/cilium
-#          version: 1.19.1
-#          values: ["${../../services/k3s/core/networking/cilium/operator/helm-values.yaml}"]
-#          wait: true
-#        - name: coredns
-#          namespace: kube-system
-#          chart: oci://ghcr.io/coredns/charts/coredns
-#          version: 1.45.2
-#          values: ["${../../services/k3s/core/networking/coredns/app/helm-values.yaml}"]
-#          wait: true
-#        - name: flux-operator
-#          namespace: flux-system
-#          chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator
-#          version: 0.43.0
-#          wait: true
-#        - name: flux-instance
-#          namespace: flux-system
-#          chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-instance
-#          version: 0.43.0
-#          values: ["${../../services/k3s/core/gitops/flux-instance/app/helm-values.yaml}", "${../../services/k3s/config/settings/flux.yaml}"]
-#          wait: true
-#          needs:
-#            - flux-system/flux-operator
-#    '';
-#  };
 
   services.openiscsi = {
     enable = true;

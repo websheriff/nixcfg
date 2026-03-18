@@ -1,0 +1,23 @@
+apiVersion: fluxcd.controlplane.io/v1
+kind: FluxInstance
+metadata:
+  name: flux
+  namespace: flux-system
+spec:
+  distribution:
+    version: "2.x"
+    registry: "ghcr.io/fluxcd"
+  components:
+    - source-controller
+    - kustomize-controller
+    - helm-controller
+    - notification-controller
+    - image-reflector-controller
+    - image-automation-controller
+  sync:
+    kind: GitRepository
+    url: ssh://forgejo@git.dev.002042.xyz/websheriff/nixcfg.git
+    ref: refs/heads/main
+    path: ../../../../k3s
+    interval: 2m
+    pullSecret: "flux-git-auth"
