@@ -45,7 +45,7 @@ in
 
   time.timeZone = "America/Chicago";
 
-  sops.secrets.websheriff-password.neededForUsers = true;
+  sops.secrets."users/websheriff/password".neededForUsers = true;
   users.mutableUsers = false;
 
 #  users.users.websheriff = {
@@ -74,6 +74,7 @@ in
     yazi
     just
     wget
+    fluxcd
   ];
   environment.variables = {
     EDITOR = "hx";

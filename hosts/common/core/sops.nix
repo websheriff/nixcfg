@@ -9,9 +9,20 @@
       generateKey = true;
     };
 
-    secrets = {
-      websheriff-password = {};
-      flux-git-auth = {};
-    };
+    #Common
+    secrets."admin/email" = {};
+    secrets."admin/base-domain" = {};
+
+    #Users
+    secrets."users/websheriff/password" = {};
+    secrets."users/websheriff/email" = {};
+
+    #FluxCD
+    secrets."fluxcd/ssh-key" = {};
+
+    #Forgejo
+    secrets."forgejo/dev/domain" = {};
+    secrets."forgejo/dev/known-host" = {};
+    secrets."forgejo/dev/access-token" = {};
   };
 }

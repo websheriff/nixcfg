@@ -8,6 +8,7 @@ in {
     programs.nushell = {
       enable = true;
       shellAliases = {
+        k = "kubectl";
         vi = "hx";
         vim = "hx";
         nano = "hx";

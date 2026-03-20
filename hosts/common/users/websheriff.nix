@@ -14,7 +14,7 @@ in
       "video"
       "minecraft"
      ];
-    hashedPasswordFile = config.sops.secrets.websheriff-password.path;
+    hashedPasswordFile = config.sops.secrets."users/websheriff/password".path;
     packages = [ inputs.home-manager.packages.${pkgs.stdenv.hostPlatform.system}.default];
   };
   users.groups.websheriff = {};
