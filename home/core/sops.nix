@@ -6,5 +6,8 @@
     defaultSopsFile = ../../../secrets.yaml;
     validateSopsFile = false;
 
+    secrets."websheriff/private_key" = {
+      path = "/home/websheriff/.ssh/id_ed25519";
+    };
   };
 }
