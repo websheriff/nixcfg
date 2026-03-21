@@ -10,12 +10,12 @@ in {
   config = mkIf cfg.enable {
 
     services.caddy = {
-      virtualHosts."git.dev.${config.sops.sercrets."admin/base-domain"}.path
+      virtualHosts."${config.sops.sercrets."forgejo/dev/domain".path}
         services.caddy = {
-          virtualHosts."git.dev.${config.sops.sercrets."admin/base-domain"}.path".extraConfig = ''
+          virtualHosts."${config.sops.sercrets."forgejo/dev/domain".path}".extraConfig = ''
           reverse_proxy http://localhost:3000
 
-         tls /var/lib/acme/dev.${config.sops.secrets."admin/base-domain"}.path/cert.pem /var/lib/acme/dev.${config.sops.secrets."admin/base-domain"}.path/key.pem {
+         tls /var/lib/acme/${config.sops.secrets."admin/dev-domain".path}/cert.pem /var/lib/acme/${config.sops.secrets."admin/dev-domain"}.path/key.pem {
             protocols tls1.3
           }
         '';
@@ -23,7 +23,7 @@ in {
           .extraConfig = ''
         reverse_proxy http://localhost:3000
 
-        tls /var/lib/acme/dev.${config.sops.secrets."admin/base-domain"}.path/cert.pem /var/lib/acme/dev.${config.sops.secrets."admin/base-domain"}.path/key.pem {
+        tls /var/lib/acme/${config.sops.secrets."admin/dev-domain".path}/cert.pem /var/lib/acme/${config.sops.secrets."admin/dev-domain".path}/key.pem {
           protocols tls1.3
         }
       '';
@@ -35,7 +35,7 @@ in {
       lfs.enable = true;
       settings = {
         server = {
-          DOMAIN = "git.dev.${config.sops.secrets."admin/base-domain"}.path";
+          DOMAIN = "${config.sops.secrets."forgejo/dev/domain".path}";
           ROOT_URL = "https://${srv.DOMAIN}/";
           HTTP_PORT = 3000;
         };
@@ -62,7 +62,7 @@ in {
       #instances.default = {
         #enable = true;
         #name = "";
-        #url = "https://git.dev.${config.sops.secrets."admin/base-domain"}.path";
+        #url = "https://${config.sops.secrets."forgego/dev/domain".path}";
         #tokenFile = ;
         #label = [
           #"native:host"
