@@ -14,13 +14,13 @@ in
   networking.hostName = "kanto";
 
   time.timeZone = "America/Chicago";
-#sops.secrets."users/websheriff/password".neededForUsers = true;
+sops.secrets."users/websheriff/password".neededForUsers = true;
   users.users.websheriff = {
       isNormalUser = true;
       extraGroups = [ "wheel" "minecraft" ];
       packages = with pkgs; [
-        tree
-	      neovim
+#        tree
+#	      neovim
       ];
     };
 nixpkgs.config.allowUnfree = true;
@@ -35,7 +35,7 @@ nixpkgs.config.allowUnfree = true;
     helix
     inputs.agenix.packages."${stdenv.hostPlatform.system}".default
   ];
-  environment.variables.EDITOR = "nvim";
+  environment.variables.EDITOR = "helix";
 
   networking = {
     usePredictableInterfaceNames = true;
