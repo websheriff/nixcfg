@@ -1,8 +1,8 @@
 { config, lib, pkgs, ... }:
 with lib; let
   cfg = config.optional.services.acme;
-  email = config.sops.secrets."admin/email".path;
-  dev-domain = config.sops.secrets."admin/dev-domain".path;
+  email = "admin@002042.xyz";
+  dev-domain = "dev.002042.xyz";
 in {
   options.optional.services.acme.enable = mkEnableOption "enable acme";
   config = mkIf cfg.enable {
