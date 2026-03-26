@@ -30,5 +30,8 @@
 
     #cert-manager
     secrets."cert-manager/cloudflare-apiToken" = {};
+
+    #traefik
+    secrets."traefik-dashboard/domain" = {};
   };
 }

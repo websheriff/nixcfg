@@ -74,7 +74,6 @@ in
     yazi
     just
     wget
-    fluxcd
   ];
   environment.variables = {
     EDITOR = "hx";
@@ -188,20 +187,10 @@ in
       "--write-kubeconfig-mode \"0644\""
       "--disable servicelb"
       "--disable local-storage"
-      "--disable traefik"
       "--disable coredns"
       "--disable metrics-server"
       # "--debug"
     ];
-    autoDeployCharts.fluxcd = {
-      enable = true;
-      name = "flux-operator";
-      targetNamespace = "flux-system";
-      createNamespace = true;
-      repo = "oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator";
-      hash = "sha256-ARdPpknA/idanpwnA1T97igTSFeGFm2HJYXx+LP5Tsc=";
-      version = "0.44.0";
-    };
   };
 
   services.openiscsi = {
