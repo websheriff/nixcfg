@@ -13,7 +13,7 @@
         - host: "${config.sops.placeholder."traefik-dashboard/domain"}"
           http:
             paths:
-            - path: /
+            - path: /dashboard
               pathType: Prefix
               backend:
                 service:

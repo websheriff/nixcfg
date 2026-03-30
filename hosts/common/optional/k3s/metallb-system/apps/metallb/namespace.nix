@@ -1,0 +1,16 @@
+{ ... }: {
+  services.k3s.manifests.metallb-namespace.content = [
+    {
+      apiVersion = "v1";
+      kind = "Namespace";
+      metadata = {
+        name = "metallb-system";
+        labels = {
+          "pod-security.kubernetes.io/enforce" = "privileged";
+          "pod-security.kubernetes.io/audit" = "privileged";
+          "pod-security.kubernetes.io/warn" = "privileged";
+        };
+      };
+    }
+  ];
+}

@@ -13,7 +13,7 @@
        };
      };
      spec = {
-       addresses = "10.5.50.100-10.5.50.200";
+       addresses = [ "10.5.50.100-10.5.50.200" ];
        autoAssign = true;
        avoidBuggyIPs = true;
      }; 
@@ -30,7 +30,7 @@
         };
       };
       spec = {
-        address = "10.5.100.145-10.5.100.150";
+        address = [ "10.5.100.145-10.5.100.150" ];
         autoAssign = false;
         avoidBuggyIPs = true;
       };

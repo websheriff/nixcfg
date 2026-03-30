@@ -9,8 +9,8 @@
         namespace = "metallb-system";
       };
       spec = {
-       ipAddressPools = "internal-pool";
-       interfaces = "eno1.50";
+       ipAddressPools = [ "internal-pool" ];
+       interfaces = [ "eno1.50" ];
       };
     }
     {
@@ -21,8 +21,8 @@
         namespace = "metallb-system";
       };
       spec = {
-        ipAddressPools = "exposed-pool";
-        interfaces = "eno1.100";
+        ipAddressPools = [ "exposed-pool" ];
+        interfaces = [ "eno1.100" ];
       };
     }
   ];
