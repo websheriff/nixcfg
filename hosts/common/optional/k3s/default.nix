@@ -5,5 +5,6 @@
     ./cert-manager
     ./cnpg-system
     ./authentik-system
+    ./vaultwarden
   ];
 }

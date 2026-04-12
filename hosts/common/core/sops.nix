@@ -52,5 +52,15 @@
     #opnsense
     secrets."opnsense/asn" = {};
     secrets."opnsense/ip" = {};
+
+    #vaultwarden
+    secrets."vaultwarden/domain" = {};
+    secrets."vaultwarden/admin-token" = {};
+    secrets."vaultwarden/sso/client-id" = {};
+    secrets."vaultwarden/sso/client-secret" = {};
+    secrets."vaultwarden/sso/auth-url" = {};
+    secrets."vaultwarden/database/host" = {};
+    secrets."vaultwarden/database/user" = {};
+    secrets."vaultwarden/database/password" = {};
   };
 }
