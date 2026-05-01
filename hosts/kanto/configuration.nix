@@ -31,6 +31,7 @@ nixpkgs.config.allowUnfree = true;
     fosrl-newt
     helix
     inputs.agenix.packages."${stdenv.hostPlatform.system}".default
+    tmux
   ];
   environment.variables.EDITOR = "hx";
 
@@ -145,10 +146,6 @@ nixpkgs.config.allowUnfree = true;
     };
   };
 
-  services.newt = {
-    enable = true;
-    environmentFile = config.age.secrets.secret-newtMC.path;
-  };
   services.netbird.clients.wt0 = {
     login = {
       enable = true;
