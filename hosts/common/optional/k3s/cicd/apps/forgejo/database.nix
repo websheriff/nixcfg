@@ -23,10 +23,10 @@
 
         storage:
           storageClass: local-path
-          size: 1Gi
+          size: 2Gi
         walStorage:
           storageClass: local-path
-          size: 1Gi
+          size: 2Gi
     '';
 
     path = "/var/lib/rancher/k3s/server/manifests/forgejo-database.yaml";
