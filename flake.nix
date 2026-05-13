@@ -21,7 +21,6 @@
 		  inputs.nixpkgs.follows = "nixpkgs";
 		};
     flake-parts.url = "github:hercules-ci/flake-parts";
-    agenix.url = "github:ryantm/agenix";
     quadlet-nix.url = "github:SEIAROTg/quadlet-nix";
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
     dms = {
@@ -36,7 +35,6 @@
 
 	outputs = {
 	  self,
-	  agenix,
 	  sops-nix,
 	  flake-parts,
 	  nixpkgs,
@@ -60,7 +58,6 @@
           specialArgs = { inherit inputs outputs; };
 			    modules = [
 				    ./hosts/kanto
-            agenix.nixosModules.default
             sops-nix.nixosModules.sops
 			    ];
 		    };
@@ -80,40 +77,9 @@
             ./hosts/sevii01
             disko.nixosModules.disko
             impermanence.nixosModules.impermanence
-            agenix.nixosModules.default
             sops-nix.nixosModules.sops
           ];
         };
       };
-#      homeConfigurations = {
-#        "websheriff@charizard" = home-manager.lib.homeManagerConfiguration {
-#          pkgs = nixpkgs.legacyPackages."x86_64-linux";
-#          extraSpecialArgs = { inherit inputs outputs; };
-#          modules = [
-#            ./home/websheriff/home.nix
-#          ];
-#        };
-#        "websheriff@kanto" = home-manager.lib.homeManagerConfiguration {
-#          pkgs = nixpkgs.legacyPackages."x86_64-linux";
-#          extraSpecialArgs = { inherit inputs outputs; };
-#          modules = [
-#            ./home/websheriff/home.nix
-#          ];
-#        };
-#        "aiRunner@kanto" = home-manager.lib.homeManagerConfiguration {
-#          pkgs = nixpkgs.legacyPackages."x86_64-linux";
-#          extraSpecialArgs = { inherit inputs outputs; };
-#          modules = [
-#            ./home/aiRunner/home.nix
-#          ];
-#        };
-#        "websheriff@sevii01" = home-manager.lib.homeManagerConfiguration {
-#          pkgs = nixpkgs.legacyPackages."x86_64-linux";
-#          extraSpecialArgs = { inherit inputs outputs; };
-#          modules = [
-#            ./home/websheriff/home.nix
-#          ];
-#        };
-#      };
     };
 }

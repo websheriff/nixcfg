@@ -5,7 +5,6 @@
     ./configuration.nix
     ./hardware-configuration.nix
     ../../services
-    ./secrets.nix
   ];
 
   optional = {

@@ -19,8 +19,8 @@
 #	      neovim
       ];
   };
-    
-nixpkgs.config.allowUnfree = true;
+  
+  nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
     age
     sops
@@ -30,7 +30,6 @@ nixpkgs.config.allowUnfree = true;
     ghostty
     fosrl-newt
     helix
-    inputs.agenix.packages."${stdenv.hostPlatform.system}".default
     tmux
   ];
   environment.variables.EDITOR = "hx";
@@ -145,8 +144,13 @@ nixpkgs.config.allowUnfree = true;
       };
     };
   };
+  sops.secrets."hosts/kanto/newt-env" = {};
+  services.newt = {
+    enable = true;
+    environmentFile = "${config.sops.secrets."hosts/kanto/newt-env".path}";
+  };
 
-  services.netbird.clients.wt0 = {
+  services.netbird.clients.wt1 = {
     login = {
       enable = true;
       setupKeyFile = config.sops.secrets."hosts/kanto/netbird/setup-key".path;
