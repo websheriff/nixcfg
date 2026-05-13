@@ -19,6 +19,12 @@
     enableNushellIntegration = true;
   };
 
+  programs.fzf = {
+    enable = true;
+    enableBashIntegration = true;
+    enableFishIntegration = true;
+  };
+
   home.packages = with pkgs; [
     fd
     btop
