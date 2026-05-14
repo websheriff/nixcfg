@@ -12,6 +12,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
+    preservation.url = "github:nix-community/preservation";
 		home-manager = {
 			url = "github:nix-community/home-manager/release-25.11";
 			inputs.nixpkgs.follows = "nixpkgs";
@@ -62,14 +63,16 @@
 			    ];
 		    };
 	    };
-      #nixosConfigurations = {
-      #  charizard = nixpkgs.lib.nixosSystem {
-      #    specialArgs = { inherit inputs outputs; };
-      #    modules = [
-      #      ./hosts/charizard
-      #    ];
-      #  };
-      #};
+      nixosConfigurations = {
+	      snorlax = nixpkgs.lib.nixosSystem {
+	        specialArgs = { inherit inputs outputs; };
+	        modules = [
+		        ./hosts/snorlax
+		        disko.nixosModules.disko
+		        sops-nix.nixosModules.sops
+          ];
+        };
+      };
       nixosConfigurations = {
         sevii01 = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };

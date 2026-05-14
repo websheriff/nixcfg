@@ -1,7 +1,5 @@
 let
   disk1 = "/dev/nvme0n1";
-  #disk2 = "/dev/nvme1n1";
-  #disk3 = "/dev/nvme2n1";
 in
 {
   disko.devices = {
