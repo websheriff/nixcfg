@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }: {
+{ config, lib, pkgs, inputs, ... }: {
 	
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -30,14 +30,24 @@
   time.timeZone = "America/Chicago";
   
   environment.systemPackages = with pkgs; [
+		inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
+		swaylock
+		swayidle
+		xwayland-satellite
 		git
 		age
 		sops
 		helix
+		ghostty
 	];
 
 	services.openssh.enable = true;
 
+	hardware.bluetooth.enable = true;
+	hardware.graphics = {
+		enable = true;
+		enable32Bit = true;
+	};
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
 

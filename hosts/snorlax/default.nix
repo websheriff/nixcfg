@@ -4,6 +4,9 @@
 		../common
 		./configuration.nix
 		./disko.nix
-		./hardware-configuration.nix	
+		./hardware-configuration.nix
+		./niri
+		./noctalia
+		./cli	
 	];
 }

@@ -17,6 +17,10 @@
 			url = "github:nix-community/home-manager/release-25.11";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
+		hjem = {
+		  url = "github:feel-co/hjem";
+		  inputs.nixpkgs.follows = "nixpkgs";
+		};
 		sops-nix = {
 		  url = "github:Mic92/sops-nix";
 		  inputs.nixpkgs.follows = "nixpkgs";
@@ -32,6 +36,15 @@
       url = "github:AvengeMedia/dms-plugin-registry";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    noctalia = {
+      url = "github:noctalia-dev/noctalia-shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.noctalia-qs.follows = "noctalia-qs";
+    };
+    noctalia-qs = {
+      url = "github:noctalia-dev/noctalia-qs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 	};
 
 	outputs = {
@@ -43,6 +56,7 @@
 	  disko,
 	  impermanence,
 	  home-manager,
+	  hjem,
 	  ... }@inputs:
     let
       inherit (self) outputs;
@@ -70,6 +84,7 @@
 		        ./hosts/snorlax
 		        disko.nixosModules.disko
 		        sops-nix.nixosModules.sops
+		        hjem.nixosModules.default
           ];
         };
       };

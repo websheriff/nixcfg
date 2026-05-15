@@ -20,5 +20,12 @@ in
   };
   users.groups.websheriff = {};
 
+  hjem.users = {
+    websheriff = {
+      user = "websheriff";
+      directory = "/home/websheriff";
+    };
+  };
+
   home-manager.users.websheriff = import ../../../home/websheriff/${config.networking.hostName}.nix;
 }
