@@ -3,33 +3,7 @@
   imports = [
     ./fish.nix
     #./nushell.nix
-    ./starship.nix
+    #./starship.nix
   ];
   
-  programs.carapace = {
-    enable = true;
-    enableBashIntegration = true;
-    enableFishIntegration = true;
-    enableNushellIntegration = true;
-  };
-  
-  programs.zoxide = {
-    enable = true;
-    enableFishIntegration = true;
-    enableNushellIntegration = true;
-  };
-
-  programs.fzf = {
-    enable = true;
-    enableBashIntegration = true;
-    enableFishIntegration = true;
-  };
-
-  home.packages = with pkgs; [
-    fd
-    btop
-    just
-    ripgrep
-    yazi
-  ];
 }

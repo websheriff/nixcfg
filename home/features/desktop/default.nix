@@ -1,8 +1,6 @@
 { pkgs, ... }: {
 
   imports = [
-    ./niri
-    ./noctalia
   ];
 
   #additional pkgs
