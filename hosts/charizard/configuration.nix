@@ -1,32 +1,56 @@
-{ config, lib, pkgs-unstable, inputs, ... }: {
+{ config, lib, inputs, ... }: {
   
   imports =
     [];
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot = {
+    loader = {
+      limine.enable = true;
+      efi = {
+        canTouchEfiVariables = true;
+        efiSysMountPoint = "/boot";
+      };
+    }; 
+    
+    initrd = {
+      luks = {
+        devices = {
+         "cryptroot" = {
+            device = "/dev/disk/by-partlabel/luks";
+          };
+          "cryptroot-fallback" = {
+            device = "/dev/disk/by-partlabel/luks-fallback";
+            tryEmptyPassphrase = true; 
+          };
+        };
+      };
+    };
+  };
 
-  networking.hostName = "charizard";
+  networking = {
+    hostName = "charizard";
+    hostId = "1eb3da56";
+    
+    networkmanager.enable = true;
+    
+    nftables.enable = true;
+    
+    firewall = {
+      allowedTCPPorts = [];
+      allowedUDPPorts = [];
+    };
+  };
 
   time.timeZone = "America/Chicago";
 
-  environment.systemPackages = with pkgs-unstable; [
+  environment.systemPackages = with pkgs; [
+    sbctl #Required for Secure Boot
     wget
     helix
     git
     ghostty
-    inputs.agenix.packages."${stdenv.hostPlatform.system}".default
   ];
   environment.variables.EDITOR = "helix";
-
-  networking.networkmanager.enable = true;
-
-  networking.nftables.enable = true;
-
-  networking.firewall.allowedTCPPorts = [ 
-  ];
-  networking.firewall.allowedUDPPorts = [
-  ];
   
   services.openssh.enable = true;
 
@@ -34,7 +58,23 @@
     enable = true;
     enable32bit = true;
   };
-  services.xserver.videoDrivers = [ "nvidia" ];
+
+  hardware.bluetooth = {
+    enable = true;
+    settings = {
+      General = {
+        Experimental = true;
+      };
+    };
+  };
+
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+  };
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   system.stateVersion = "25.11";
