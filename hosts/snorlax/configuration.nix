@@ -39,6 +39,7 @@
 		sops
 		helix
 		ghostty
+		firefox
 	];
 
 	services.openssh.enable = true;
