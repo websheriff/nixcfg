@@ -48,8 +48,22 @@
     wget
     helix
     git
-    ghostty
+    libreoffice
+    nemo-with-extensions
+    nemo-preview
+    loupe
+    papers
   ];
+
+  xdg = {
+    mime.defaultApplications = {
+      "inode/directory" = [ "nemo.desktop" ];
+      "application/x-gnome-saved-search" = [ "nemo.desktop" ];
+    };
+  };
+
+  services.gvfs.enable = true;
+
   environment.variables.EDITOR = "helix";
   
   services.openssh.enable = true;

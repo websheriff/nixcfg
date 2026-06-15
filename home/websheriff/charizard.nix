@@ -9,18 +9,20 @@
 
   features = {
     cli = {
-      fish.enable = false;
-      nushell.enable = true;
-      starship.enable = true;
+      fish.enable = true;
+      nushell.enable = false;
+      starship.enable = false;
       secrets.enable = true;
     };
-    desktop = {
-      niri.enable = true;
-      ghostty.enable = true;
-      fonts.enable = true;
-      media.enable = true;
-      gaming.enable = true;
-      zen.enable = true;
-    };
-  };  
+  };
+
+  home.packages = with pkgs; [
+    prismlauncher
+  ];
+
+  users.users.websheriff.packages = with pkgs; [
+    discord-ptb
+    signal-desktop
+    bitwarden-desktop
+  ];
 }
