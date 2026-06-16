@@ -54,6 +54,7 @@
     loupe
     papers
     inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
+    fuzzel
   ];
 
   services.displayManager.ly.enable = true;

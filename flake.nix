@@ -41,6 +41,16 @@
       url = "github:noctalia-dev/noctalia-qs";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    zen-browser = {
+      url = "github:0xc000022070/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
+    vicinae.url = "github:vicinaehq/vicinae";
+    vicinae-extensions = {
+      url = "github:vicinaehq/extensions";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 	};
 
 	outputs = {
@@ -52,6 +62,7 @@
 	  disko,
 	  impermanence,
 	  home-manager,
+	  vicinae,
 	  ... }@inputs:
     let
       inherit (self) outputs;
@@ -70,6 +81,7 @@
             ./hosts/charizard
             disko.nixosModules.disko
             sops-nix.nixosModules.sops
+            vicinae.nixosModules.default
           ];
         };
       };

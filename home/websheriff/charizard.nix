@@ -5,6 +5,9 @@
    ../core
    ../features/cli
    ../features/desktop
+   ../ghostty.nix
+   ../zen.nix
+#  ../vicinae.nix
   ];
 
   features = {

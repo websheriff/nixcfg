@@ -85,7 +85,7 @@
     };
 
   # Use legacy profile mode to avoid needing machine-specific Install identifier
-  home.sessionVariables.MOZ_LEGACY_PROFILES = "1";
+  #home.sessionVariables.MOZ_LEGACY_PROFILES = "1";
 
   profiles.${config.home.username} = rec {
     id = 0; # Profile IDs must be sequential starting from 0
@@ -324,36 +324,37 @@
     };
   };
   # Open files with the browser
-  xdg.mimeApps =
-    let
-      associations = builtins.listToAttrs (
-        map
-          (name: {
-            inherit name;
-            value = "zen-beta.desktop";
-          })
-          [
-            "application/x-extension-shtml"
-            "application/x-extension-xhtml"
-            "application/x-extension-html"
-            "application/x-extension-xht"
-            "application/x-extension-htm"
-            "x-scheme-handler/unknown"
-            "x-scheme-handler/mailto"
-            "x-scheme-handler/chrome"
-            "x-scheme-handler/about"
-            "x-scheme-handler/https"
-            "x-scheme-handler/http"
-            "application/xhtml+xml"
-            "application/json"
-            "text/plain"
-            "text/html"
-          ]
-      );
-    in
-    {
-      enable = true;
-      associations.added = associations;
-      defaultApplications = associations;
-    };
+  #xdg.mimeApps =
+   # let
+    #  associations = builtins.listToAttrs (
+     #   map
+      #    (name: {
+       #     inherit name;
+       #     value = "zen-beta.desktop";
+       #   })
+       #   [
+        #    "application/x-extension-shtml"
+        #    "application/x-extension-xhtml"
+        #    "application/x-extension-html"
+        #    "application/x-extension-xht"
+         #   "application/x-extension-htm"
+         #   "x-scheme-handler/unknown"
+         #   "x-scheme-handler/mailto"
+         #   "x-scheme-handler/chrome"
+         #   "x-scheme-handler/about"
+         #   "x-scheme-handler/https"
+         #   "x-scheme-handler/http"
+         #   "application/xhtml+xml"
+         #   "application/json"
+         #   "text/plain"
+         #   "text/html"
+         # ]
+      #);
+    #in
+    #{
+    #  enable = true;
+    #  associations.added = associations;
+    #  defaultApplications = associations;
+    #};
+  };
 }

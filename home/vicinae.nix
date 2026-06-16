@@ -1,4 +1,4 @@
-{ ... }: {
+{ inputs, pkgs, ... }: {
   services.vicinae = {
     enable = true;
     systemd = {
@@ -28,7 +28,7 @@
     extensions = with inputs.vicinae-extensions.packages.${pkgs.stdenv.hostPlatform.system}; [
       bluetooth
       nix
-      power-profil
+      power-profile
       ssh
     ];
   };
