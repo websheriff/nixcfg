@@ -5,8 +5,8 @@
 
   #additional pkgs
   home.packages = with pkgs; [
-    signal-desktop
-    bitwarden-desktop
+   # signal-desktop
+   # bitwarden-desktop
   ];
 
   

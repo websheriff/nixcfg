@@ -5,7 +5,7 @@ keys:
     - &sevii01 age1mh9krt55s6fl7qy7duz6e7ddwvurcqasqdc2tae0aapdaw99p99qzh7dww
     - &kanto age1q80fddfmd29x67fnhw4sv9dfzdu5vk5k4phpjkftpjg6rcfzsqqszx52rv
     - &snorlax age1cvzj87prncuvklparf78tfcxenqa8fszqrl82dyc28fgat2g04xsk34yuz
-    - &charizard age1p23u2vrqlveu8nh9lvhuatxgxt5kvjqk5amreq0rydppjqkwza0qfnrp6p
+    - &charizard age1k84hv2xpv2h9lnclpk58pfzq64djwz8pqvg0f2zqfszadmulq5pqwx7tex
 creation_rules:
   - path_regex: secrets.yaml$
     key_groups:

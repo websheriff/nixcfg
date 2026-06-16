@@ -2,7 +2,7 @@
 	description = "Nixcfg Flake";
 	inputs = {
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
-		nixpkgs.url = "nixpkgs/nixos-25.11";
+		nixpkgs.url = "nixpkgs/nixos-26.05";
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -14,12 +14,8 @@
     };
     preservation.url = "github:nix-community/preservation";
 		home-manager = {
-			url = "github:nix-community/home-manager/release-25.11";
+			url = "github:nix-community/home-manager/release-26.05";
 			inputs.nixpkgs.follows = "nixpkgs";
-		};
-		hjem = {
-		  url = "github:feel-co/hjem";
-		  inputs.nixpkgs.follows = "nixpkgs";
 		};
 		sops-nix = {
 		  url = "github:Mic92/sops-nix";
@@ -56,7 +52,6 @@
 	  disko,
 	  impermanence,
 	  home-manager,
-	  hjem,
 	  ... }@inputs:
     let
       inherit (self) outputs;
@@ -68,6 +63,16 @@
       packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
       homeManagerModules = import ./modules/home-manager;
 
+      nixosConfigurations = {
+        charizard = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+          modules = [
+            ./hosts/charizard
+            disko.nixosModules.disko
+            sops-nix.nixosModules.sops
+          ];
+        };
+      };
 		  nixosConfigurations = {
 			  kanto = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
@@ -84,7 +89,6 @@
 		        ./hosts/snorlax
 		        disko.nixosModules.disko
 		        sops-nix.nixosModules.sops
-		        hjem.nixosModules.default
           ];
         };
       };

@@ -1,6 +1,6 @@
 let
   disk1 = "/dev/nvme0n1";
-  disk2 = "/dev/nvme1n1";
+  disk2 = "/dev/nvme2n1";
 in
 {
   disko.devices = {
@@ -80,16 +80,18 @@ in
           ashift = "12";
           autotrim = "on";
         };
-        rootTmpfs = true;
-        mountpoint = "none";
+        rootFsOptions = {
+          mountpoint = "none";
+          canmount = "off";
+        };
 
         datasets = {
           "local" = {
-            type = "zfs_dataset";
+            type = "zfs_fs";
             options.mountpoint = "none";
           };
           "local/root" = {
-            type = "zfs_dataset";
+            type = "zfs_fs";
             mountpoint = "/";
             options = {
               mountpoint = "legacy";
@@ -101,21 +103,20 @@ in
             '';
           };
           "local/nix" = {
-            type = "zfs_dataset";
+            type = "zfs_fs";
             mountpoint = "/nix";
             options = {
               mountpoint = "legacy";
               atime = "off";
-              nodump = "on";
               "com.sun:auto-snapshot" = "false";
             };
           };
           "safe" = {
-            type = "zfs_dataset";
+            type = "zfs_fs";
             options.mountpoint = "none";
           };
           "safe/home" = {
-            type = "zfs_dataset";
+            type = "zfs_fs";
             mountpoint = "/home";
             options = {
               mountpoint = "legacy";
@@ -123,7 +124,7 @@ in
             };
           };
           "safe/persist" = {
-            type = "zfs_dataset";
+            type = "zfs_fs";
             mountpoint = "/persist";
             options = {
               mountpoint = "legacy";

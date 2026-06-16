@@ -1,4 +1,4 @@
-{ config, lib, inputs, ... }: {
+{ config, lib, inputs, pkgs, ... }: {
   
   imports =
     [];
@@ -53,7 +53,10 @@
     nemo-preview
     loupe
     papers
+    inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
+
+  services.displayManager.ly.enable = true;
 
   xdg = {
     mime.defaultApplications = {
@@ -70,7 +73,7 @@
 
   hardware.graphics = {
     enable = true;
-    enable32bit = true;
+    enable32Bit = true;
   };
 
   hardware.bluetooth = {

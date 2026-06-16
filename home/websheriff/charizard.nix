@@ -1,4 +1,4 @@
-{ ...  }: {
+{ pkgs, ...  }: {
 
   imports = [
    ./home.nix
@@ -10,9 +10,6 @@
   features = {
     cli = {
       fish.enable = true;
-      nushell.enable = false;
-      starship.enable = false;
-      secrets.enable = true;
     };
   };
 
@@ -20,9 +17,5 @@
     prismlauncher
   ];
 
-  users.users.websheriff.packages = with pkgs; [
-    discord-ptb
-    signal-desktop
-    bitwarden-desktop
-  ];
+  xdg.configFile."niri/config.kdl".source = ../../hosts/charizard/niri/config.kdl;
 }

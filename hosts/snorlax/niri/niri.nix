@@ -15,9 +15,9 @@
     };
   };
   
-  hjem.users.websheriff = {
-    files = {
-      ".config/niri/config.kdl".source = ./config.kdl;
-    };
-  };
+#  hjem.users.websheriff = {
+#    files = {
+#      ".config/niri/config.kdl".source = ./config.kdl;
+#    };
+#  };
 }

@@ -3,12 +3,10 @@
     ../common
     ./niri
     ./noctalia
-    ./cli/cli.nix
+#    ./cli/cli.nix
     ./configuration.nix
+    ./hardware-configuration.nix
     ./disko.nix
-    ./ghostty.nix
     ./steam.nix
-    ./vicinae.nix
-    ./zen.nix
   ];
 }
