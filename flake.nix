@@ -33,12 +33,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     noctalia = {
-      url = "github:noctalia-dev/noctalia-shell";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.noctalia-qs.follows = "noctalia-qs";
-    };
-    noctalia-qs = {
-      url = "github:noctalia-dev/noctalia-qs";
+      url = "github:noctalia-dev/noctalia";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     zen-browser = {
@@ -49,6 +44,10 @@
     vicinae.url = "github:vicinaehq/vicinae";
     vicinae-extensions = {
       url = "github:vicinaehq/extensions";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    stylix = {
+      url = "github:nix-community/stylix/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 	};
@@ -63,6 +62,7 @@
 	  impermanence,
 	  home-manager,
 	  vicinae,
+	  stylix,
 	  ... }@inputs:
     let
       inherit (self) outputs;
@@ -82,6 +82,7 @@
             disko.nixosModules.disko
             sops-nix.nixosModules.sops
             vicinae.nixosModules.default
+            stylix.nixosModules.stylix
           ];
         };
       };

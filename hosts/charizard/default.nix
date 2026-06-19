@@ -8,5 +8,6 @@
     ./hardware-configuration.nix
     ./disko.nix
     ./steam.nix
+    ./stylix.nix
   ];
 }
