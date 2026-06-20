@@ -3,7 +3,8 @@
     ../common
     ./niri
     ./noctalia
-#    ./cli/cli.nix
+    #    ./cli/cli.nix
+    ./cli/fish.nix
     ./configuration.nix
     ./hardware-configuration.nix
     ./disko.nix

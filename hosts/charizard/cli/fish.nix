@@ -1,4 +1,10 @@
-{ config, lib, pkgs, ... }: { 
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+{
   programs.bash = {
     interactiveShellInit = ''
       if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
@@ -8,14 +14,6 @@
       fi
     '';
   };
-  programs.fish = {
-    enable = true;
-      interactiveShellInit = ''
-        set fish_greeting
-      '';
-      shellAbbrs = {
-        k = "kubectl";
-        grep = "rg";
-      };
-    };
+
+  programs.fish.enable = true;
 }
