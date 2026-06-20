@@ -1,6 +1,8 @@
 { inputs, pkgs, ... }: {
 
-  imports = [ ];
+  imports = [
+    inputs.noctalia-greeter.nixosModules.default
+  ];
 
   boot = {
     loader = {
@@ -68,7 +70,7 @@
     loupe
     papers
     inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
-    fuzzel
+    sops
     xwayland-satellite
   ];
 
@@ -77,7 +79,12 @@
     signal-desktop
   ];
 
-  services.displayManager.ly.enable = true;
+  programs.noctalia-greeter = {
+    enable = true;
+    package = inputs.noctalia-greeter.packages.${pkgs.stdenv.hostPlatform.system}.default;
+
+    greeter-args = "--session niri";
+  };
 
   xdg = {
     mime.defaultApplications = {
