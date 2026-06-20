@@ -1,8 +1,7 @@
 {
-	description = "Nixcfg Flake";
-	inputs = {
-    nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
-		nixpkgs.url = "nixpkgs/nixos-26.05";
+  description = "Nixcfg Flake";
+  inputs = {
+    nixpkgs.url = "nixpkgs/nixos-26.05";
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -13,27 +12,22 @@
       inputs.home-manager.follows = "home-manager";
     };
     preservation.url = "github:nix-community/preservation";
-		home-manager = {
-			url = "github:nix-community/home-manager/release-26.05";
-			inputs.nixpkgs.follows = "nixpkgs";
-		};
-		sops-nix = {
-		  url = "github:Mic92/sops-nix";
-		  inputs.nixpkgs.follows = "nixpkgs";
-		};
+    home-manager = {
+      url = "github:nix-community/home-manager/release-26.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     flake-parts.url = "github:hercules-ci/flake-parts";
-    quadlet-nix.url = "github:SEIAROTg/quadlet-nix";
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
-    dms = {
-      url = "github:AvengeMedia/DankMaterialShell/stable";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    dms-plugin-registry = {
-      url = "github:AvengeMedia/dms-plugin-registry";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     noctalia = {
       url = "github:noctalia-dev/noctalia";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    noctalia-greeter = {
+      url = "github:noctalia-dev/noctalia-greeter";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     zen-browser = {
@@ -50,27 +44,31 @@
       url = "github:nix-community/stylix/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-	};
+    hermes-agent.url = "github:NousResearch/hermes-agent";
+  };
 
-	outputs = {
-	  self,
-	  sops-nix,
-	  flake-parts,
-	  nixpkgs,
-	  nixpkgs-unstable,
-	  disko,
-	  impermanence,
-	  home-manager,
-	  vicinae,
-	  stylix,
-	  ... }@inputs:
+  outputs =
+    {
+      self,
+      sops-nix,
+      flake-parts,
+      nixpkgs,
+      disko,
+      impermanence,
+      home-manager,
+      vicinae,
+      stylix,
+      hermes-agent,
+      ...
+    }@inputs:
     let
       inherit (self) outputs;
       systems = [
         "x86_64-linux"
       ];
       forAllSystems = nixpkgs.lib.genAttrs systems;
-    in {
+    in
+    {
       packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
       homeManagerModules = import ./modules/home-manager;
 
@@ -86,22 +84,23 @@
           ];
         };
       };
-		  nixosConfigurations = {
-			  kanto = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs; };
-			    modules = [
-				    ./hosts/kanto
-            sops-nix.nixosModules.sops
-			    ];
-		    };
-	    };
       nixosConfigurations = {
-	      snorlax = nixpkgs.lib.nixosSystem {
-	        specialArgs = { inherit inputs outputs; };
-	        modules = [
-		        ./hosts/snorlax
-		        disko.nixosModules.disko
-		        sops-nix.nixosModules.sops
+        kanto = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+          modules = [
+            ./hosts/kanto
+            sops-nix.nixosModules.sops
+            hermes-agent.nixosModules.default
+          ];
+        };
+      };
+      nixosConfigurations = {
+        snorlax = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+          modules = [
+            ./hosts/snorlax
+            disko.nixosModules.disko
+            sops-nix.nixosModules.sops
           ];
         };
       };
