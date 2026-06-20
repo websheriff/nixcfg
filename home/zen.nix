@@ -108,6 +108,7 @@
         "zen.view.compact.hide-tabbar" = true;
         "zen.view.compact.hide-toolbar" = true;
         "zen.view.compact.animate-sidebar" = true;
+        "zen.view.user-signle-toolbar" = false;
         "zen.welcome-screen.seen" = true;
         "zen.urlbar.behavior" = "float";
         "ui.systemUsesDarkTheme" = 1;
@@ -137,54 +138,6 @@
           disabled = true;
         }
       ];
-
-      #spacesForce = true;
-      #spaces = {
-      # "Personal" = {
-      #  id = "4d929899-3c7c-44e3-be00-e1e850836b6f";
-      #  position = 1000;
-      # theme = {
-      #   type = "gradient";
-      #   colors = [
-      #     {
-      #       algorithm = "floating";
-      #       type = "explicit-lightness";
-      #       red = 107;
-      #       green = 126;
-      #       blue = 148;
-      #       lightness = 50;
-      #       position = {
-      #         x = 51;
-      #         y = 97;
-      #       };
-      #     }
-      #   ];
-      #   opacity = 0.5;
-      # };
-      #};
-      #"Work" = {
-      #  id = "1aa8cdd7-cf7b-4523-a2aa-20d3f085dfd3";
-      #  position = 2000;
-      #  theme = {
-      #    type = "gradient";
-      #    colors = [
-      #      {
-      #        algorithm = "floating";
-      #        type = "explicit-lightness";
-      #        red = 84;
-      #        green = 140;
-      #        blue = 171;
-      #        lightness = 50;
-      #        position = {
-      #          x = 68;
-      #          y = 137;
-      #        };
-      #      }
-      #    ];
-      #    opacity = 0.5;
-      #  };
-      # };
-      #};
 
       pinsForce = true;
       pins = {
