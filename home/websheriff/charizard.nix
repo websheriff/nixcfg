@@ -9,6 +9,7 @@
     ../zen.nix
     #../vicinae.nix
     ../noctalia.nix
+    ../mango.nix
   ];
 
   features = {

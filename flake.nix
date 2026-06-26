@@ -22,6 +22,10 @@
     };
     flake-parts.url = "github:hercules-ci/flake-parts";
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
+    mangowm = {
+      url = "github:mangowm/mango";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     noctalia = {
       url = "github:noctalia-dev/noctalia";
       inputs.nixpkgs.follows = "nixpkgs";
