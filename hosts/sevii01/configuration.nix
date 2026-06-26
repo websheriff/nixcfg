@@ -39,7 +39,6 @@
     yaml-language-server
     helm-ls
     git
-    inputs.agenix.packages."${stdenv.hostPlatform.system}".default
     ghostty
     k3s
     nfs-utils
