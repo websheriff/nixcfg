@@ -8,5 +8,6 @@
     ./documentation
     ./authentication
     ./netbird
+    ./cicd
   ];
 }

@@ -1,15 +1,15 @@
 { config, ... }: {
 
   sops = {
-    secrets."forgejo/prod/domain" = {};
-    secrets."forgejo/admin/user" = {};
-    secrets."forgejo/admin/password" = {};
-    secrets."forgejo/prod/database/host" = {};
-    secrets."forgejo/prod/database/user" = {};
-    secrets."forgejo/prod/database/password" = {};
-    
+    secrets."forgejo/prod/domain" = { };
+    secrets."forgejo/admin/user" = { };
+    secrets."forgejo/admin/password" = { };
+    secrets."forgejo/prod/database/host" = { };
+    secrets."forgejo/prod/database/user" = { };
+    secrets."forgejo/prod/database/password" = { };
+
     templates = {
-      "forgejo/secret-admin.yaml" = {
+      "forgejo/forgejo-secret-admin.yaml" = {
         content = ''
           apiVersion: v1
           kind: Secret
@@ -29,7 +29,7 @@
         mode = "0644";
       };
 
-      "forgejo/secret-db.yaml" = {
+      "forgejo/forgejo-secret-db.yaml" = {
         content = ''
           apiVersion: v1
           kind: Secret
@@ -49,7 +49,7 @@
         mode = "0644";
       };
 
-      "forgejo/database-auth.yaml" = {
+      "forgejo/forgejo-database-auth.yaml" = {
         content = ''
           apiVersion: v1
           kind: Secret

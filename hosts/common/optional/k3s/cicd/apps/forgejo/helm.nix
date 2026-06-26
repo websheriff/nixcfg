@@ -1,6 +1,6 @@
-{ config, ... } :{
+{ config, ... }: {
 
-  sops.templates."forgejo/helm.yaml" = {
+  sops.templates."forgejo/forgejo-helm.yaml" = {
     content = ''
       apiVersion: helm.cattle.io/v1
       kind: HelmChart
@@ -21,7 +21,7 @@
                 enabled: true
 
             admin:
-              exisitingSecret: forgejo-admin
+              existingSecret: forgejo-admin
 
             config:
               database:
@@ -61,5 +61,10 @@
             hosts:
               - host: ${config.sops.placeholder."forgejo/prod/domain"}
     '';
+
+    path = "/var/lib/rancher/k3s/server/manifests/forgejo-helm.yaml";
+    owner = "root";
+    group = "root";
+    mode = "0644";
   };
 }

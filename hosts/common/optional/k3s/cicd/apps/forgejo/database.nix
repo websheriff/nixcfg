@@ -1,6 +1,6 @@
 { config, ... }: {
 
-  sops.templates."forgejo/database.yaml" = {
+  sops.templates."forgejo/forgejo-database.yaml" = {
     content = ''
       apiVersion: postgresql.cnpg.io/v1
       kind: Cluster
