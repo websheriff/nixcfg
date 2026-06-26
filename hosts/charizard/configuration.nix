@@ -2,6 +2,7 @@
 
   imports = [
     inputs.noctalia-greeter.nixosModules.default
+    inputs.mangowm.nixosModules.mango
   ];
 
   boot = {
@@ -72,6 +73,7 @@
     inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
     sops
     xwayland-satellite
+    wl-clipboard
   ];
 
   users.users.websheriff.packages = with pkgs; [
