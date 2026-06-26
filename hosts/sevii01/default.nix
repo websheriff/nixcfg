@@ -6,6 +6,5 @@
     ./hardware-configuration.nix
     ./disk-config.nix
     #./impermanence.nix
-    ./secrets.nix
   ];
 }
