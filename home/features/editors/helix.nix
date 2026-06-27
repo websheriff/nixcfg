@@ -1,7 +1,9 @@
 { lib, ... }:
-with lib; let
+with lib;
+let
   cfg = config.features.editors.helix;
-in {
+in
+{
   options.features.editors.helix.enable = mkEnableOption "enable fish";
   config = mkIf cfg.enable {
 
@@ -15,11 +17,14 @@ in {
           select = "underline";
         };
       };
-      languages.language = [{
-        name = "nix";
-        auto-format = true;
-        formatter.command = "${pkgs.nixfmt}";
-      }];
+
+      languages.language = [
+        {
+          name = "nix";
+          auto-format = true;
+          formatter.command = "${pkgs.nixfmt}";
+        }
+      ];
     };
   };
 }
