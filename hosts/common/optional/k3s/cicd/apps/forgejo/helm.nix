@@ -39,6 +39,10 @@
                 DB_TYPE: postgres
                 NAME: forgejo
 
+              migrations:
+                ALLOWED_DOMAINS: "${config.sops.placeholder."forgejo/dev/domain"}"
+                ALLOW_LOCALNETWORKS: true
+
             additionalConfigFromEnvs:
               - name: FORGEJO__DATABASE__HOST
                 valueFrom:
@@ -55,6 +59,7 @@
                   secretKeyRef:
                     name: forgejo-db
                     key: password
+                    
           service:
             http:
               type: LoadBalancer
