@@ -1,5 +1,4 @@
 { config, ... }: {
-
   sops = {
     secrets."forgejo/prod/domain" = { };
     secrets."forgejo/admin/user" = { };
@@ -7,6 +6,8 @@
     secrets."forgejo/prod/database/host" = { };
     secrets."forgejo/prod/database/user" = { };
     secrets."forgejo/prod/database/password" = { };
+    secrets."forgejo/prod/oauth/client-id" = { };
+    secrets."forgejo/prod/oauth/client-secret" = { };
 
     templates = {
       "forgejo/forgejo-secret-admin.yaml" = {
@@ -64,6 +65,25 @@
         '';
 
         path = "/var/lib/rancher/k3s/server/manifests/forgejo-database-auth.yaml";
+        owner = "root";
+        group = "root";
+        mode = "0644";
+      };
+
+      "forgejo/forgejo-secret-oauth.yaml" = {
+        content = ''
+          apiVersion: v1
+          kind: Secret
+          metadata:
+            name: forgejo-oauth
+            namespace: cicd
+          type: Opaque
+          stringData:
+            key: "${config.sops.placeholder."forgejo/prod/oauth/client-id"}"
+            secret: "${config.sops.placeholder."forgejo/prod/oauth/client-secret"}"
+        '';
+
+        path = "/var/lib/rancher/k3s/server/manifests/forgejo-secret-oauth.yaml";
         owner = "root";
         group = "root";
         mode = "0644";

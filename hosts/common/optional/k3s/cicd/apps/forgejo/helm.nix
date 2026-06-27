@@ -8,9 +8,8 @@
         name: forgejo
         namespace: kube-system
       spec:
-        repo: oci://code.forgejo.org/forgejo-helm/forgejo
-        version: "16.2.1"
-        chart: forgejo
+        chart: oci://code.forgejo.org/forgejo-helm/forgejo
+        version: "17.1.1"
         targetNamespace: cicd
         createNamespace: false
         valuesContent: |
@@ -18,12 +17,24 @@
             metrics:
               enabled: true
               serviceMonitor:
-                enabled: true
+                enabled: false
 
             admin:
               existingSecret: forgejo-admin
 
+            oauth:
+              - name: 'Pocket ID'
+                provider: 'openidConnect'
+                autoDiscoverUrl: 'https://${
+                  config.sops.placeholder."pocketid/domain"
+                }/.well-known/openid-configuration'
+                existingSecret: forgejo-oauth
+
             config:
+              server:
+                ROOT_URL: https://${config.sops.placeholder."forgejo/prod/domain"}
+                SSH_DOMAIN: ${config.sops.placeholder."forgejo/prod/domain"}
+
               database:
                 DB_TYPE: postgres
                 NAME: forgejo
@@ -58,8 +69,6 @@
 
           ingress:
             enabled: false
-            hosts:
-              - host: ${config.sops.placeholder."forgejo/prod/domain"}
     '';
 
     path = "/var/lib/rancher/k3s/server/manifests/forgejo-helm.yaml";

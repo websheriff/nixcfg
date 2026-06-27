@@ -14,7 +14,7 @@
         - match: Host(`${config.sops.placeholder."forgejo/prod/domain"}`)
           kind: Rule
           services:
-            - name: forgejo
+            - name: forgejo-http
               port: 3000
     '';
 
