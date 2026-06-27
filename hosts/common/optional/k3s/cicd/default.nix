@@ -2,6 +2,7 @@
 
   imports = [
     ./apps/forgejo
+    #./apps/forgejo-runner
   ];
 
   services.k3s.manifests.cicd-ns.content = {

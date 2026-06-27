@@ -10,7 +10,7 @@
       stringData:
         CONFIG_INSTANCE: "${config.sops.placeholder."forgejo/prod/domain"}"
         CONFIG_NAME: "Professor Oak"
-        CONFIG_TOKEN: "${config.sops.placeholder."forgejo/runner/token"}"   
+        CONFIG_TOKEN: "${config.sops.placeholder."forgejo/prod/runner/token"}"   
     '';
 
     path = "/var/lib/rancher/k3s/server/manifests/forgejo-runner-secret-init.yaml";
