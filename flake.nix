@@ -49,6 +49,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hermes-agent.url = "github:NousResearch/hermes-agent";
+    comin = {
+      url = "github:nlewo/comin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -63,6 +67,7 @@
       vicinae,
       stylix,
       hermes-agent,
+      comin,
       ...
     }@inputs:
     let
