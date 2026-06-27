@@ -23,6 +23,8 @@
     prismlauncher
   ];
 
+  stylix.targets.helix.enable = false;
+
   programs.helix = {
     settings = {
       theme = "ayu_evolve";
