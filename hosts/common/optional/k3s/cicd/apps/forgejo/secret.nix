@@ -1,14 +1,5 @@
 { config, ... }: {
   sops = {
-    secrets."forgejo/prod/domain" = { };
-    secrets."forgejo/admin/user" = { };
-    secrets."forgejo/admin/password" = { };
-    secrets."forgejo/prod/database/host" = { };
-    secrets."forgejo/prod/database/user" = { };
-    secrets."forgejo/prod/database/password" = { };
-    secrets."forgejo/prod/oauth/client-id" = { };
-    secrets."forgejo/prod/oauth/client-secret" = { };
-
     templates = {
       "forgejo/forgejo-secret-admin.yaml" = {
         content = ''
