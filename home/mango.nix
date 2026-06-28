@@ -6,23 +6,20 @@
   wayland.windowManager.mango = {
     enable = true;
 
-    autostart_sh = ''
-      noctalia &
-    '';
-
     extraConfig = ''
-      monitorrule=name:^DP-1$,width:3440,height:1440,refresh:164.900,x:1080,y:0,scale:1.25,vrr:1
-      monitorrule=name:^DP-2$,width:1920,height:1080,refresh,165.00,x:0,y:0,scale:1.0,rr:90,vrr:0
+      monitorrule=name:^DP-1$,width:3440,height:1440,refresh:164.900,x:1080,y:0,scale:1.25,vrr:0
+      monitorrule=name:^DP-2$,width:1920,height:1080,refresh,165.00,x:0,y:0,scale:1.0,rr:1,vrr:0
     '';
 
     settings = {
+      exec-once = [
+        "dbus-update-activation-environment --systemd WAYLAND_DISPLAY_DESKTOP XDG_SESSION_TYPE XDG_SESSION_DESKTOP"
+        "systemctl --user import-environment PATH XDG_SESSION_TYPE XDG_SESSION_DESKTOP"
+        "systemctl --user start mango-session.target"
+      ];
+
       xwayland_persistence = 1;
       sloppyfocus = 1;
-
-      #monitor = [
-      # "DP-1,width:3440,height:1440,refresh:164.900,x:1080,y:0,scale:1.25,vrr:1"
-      # "DP-2,width:1920height:1080,refresh:165.000,x:0,y:0,scale:1.0,rr:90"
-      #];
 
       # Window effects
       blur = 1;
@@ -33,28 +30,44 @@
       };
 
       focused_opacity = 1.0;
-      unfocused_opacity = 0.94;
+      unfocused_opacity = 0.9;
 
-      border_radius = 6;
+      border_radius = 12;
+      borderpx = 4;
 
       animations = 1;
       animation_type_open = "slide";
       animation_type_close = "slide";
 
+      new_is_master = 1;
+
+      layerrule = [
+        #No animations on DMS layers
+        "noanim:1,layer_name:^dms"
+      ];
+
+      windowrule = [
+        #Float DMS Windows
+        "isfloating:1,appid:^org\.quickshell$"
+      ];
+
       bind = [
         #System Actions
         "SUPER,Return,spawn,ghostty"
-        "SUPER,D,spawn,noctalia msg panel-toggle launcher"
-        "SUPER,S,spawn,noctalia msg panel-toggle control-center"
-        "SUPER,Comma,spawn,noctalia msg settings-toggle"
-        "Super,L,spawn,swaylock"
+        "SUPER,D,spawn,dms ipc call spotlight toggle"
+        "SUPER,V,spawn,dms ipc call clipboard toggle"
+        "SUPER,Comma,spawn,dms ipc call settings focusOrToggle"
+        "SUPER,N,spawn,dms ipc call notifications toggle"
+        "SUPER,M,spawn,dms ipc call processlist focusOrToggle"
+        "SUPER,Y,spawn,dms ipc call dankdash wallpaper"
+        "SUPER,L,spawn,swaylock"
         "SUPER,SPACE,toggleoverview"
-        "SUPER+SHIFT,E,reload_config"
+        "SUPER+CTRL,R,reload_config"
 
         #Audio Controls
-        "NONE,XF86AudioRaiseVolume,spawn,noctalia msg volume-up"
-        "NONE,XF86AudioLowerVolume,spawn,noctalia msg volume-down"
-        "NONE,XF86AudioMute,spawn,noctalia msg volume-mute"
+        "NONE,XF86AudioRaiseVolume,spawn,dms ipc call audio increment 3"
+        "NONE,XF86AudioLowerVolume,spawn,dms ipc call audio decrement 3"
+        "NONE,XF86AudioMute,spawn,dms ipc call audio mute"
         "NONE,XF86AudioMicMute,spawn,wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
 
         #Media Keys
@@ -64,14 +77,15 @@
         "NONE,XF86AudioNext,spawn,playerctl next"
 
         #Brightness Control
-        "NONE,XF86MonBrightnessUp,spawn,noctalia msg brightness-up"
-        "NONE,XF86MonBrightnessDown,spawn,noctalia msg brightness-down"
+        "NONE,XF86MonBrightnessUp,spawn,dms ipc call brightness increment 5"
+        "NONE,XF86MonBrightnessDown,spawn,dms ipc call brightness decrement 5"
 
         #Windows
         "SUPER,Q,killclient"
-        "SUPER,F,togglefullscreen"
-        "SUPER+CTRL,F,togglefloating"
-        "SUPER,V,switch_layout"
+        "SUPER,F,togglemaximizescreen"
+        "SUPER+CTRL,F,togglefullscreen"
+        "SUPER+ALT,F,togglefloating"
+        "SUPER,S,switch_layout"
 
         #Window Focus
         "SUPER,Left,focusdir,left"
@@ -122,6 +136,10 @@
         # Layout adjustments (Resizing windows)
         "SUPER,Minus,setmfact,-0.05"
         "SUPER,Equal,setmfact,+0.05"
+        "SUPER+ALT,Left,resizewin,-20,0"
+        "SUPER+ALT,Right,resizewin,20,0"
+        "SUPER+ALT,Up,resizewin,0,-20"
+        "SUPER+ALT,Down,resizewin,0,20"
 
         # Screenshots
         "NONE,Print,spawn,grimshot save area"
@@ -159,6 +177,8 @@
       XDG_SESSION_DESKTOP = "Mango";
       QT_QPA_PLATFORM = "wayland";
       QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
+      #QT_QPA_PLATFORMTHEME = "gtk3";
+      ELECTRON_OZONE_PLATFORM_HINT = "auto";
       SDL_VIDEODRIVER = "wayland";
       CLUTTER_BACKEND = "wayland";
       GDK_BACKEND = "wayland,x11";

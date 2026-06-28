@@ -81,12 +81,12 @@
     signal-desktop
   ];
 
-  programs.noctalia-greeter = {
-    enable = true;
-    package = inputs.noctalia-greeter.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  #  programs.noctalia-greeter = {
+  #    enable = true;
+  #    package = inputs.noctalia-greeter.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
-    greeter-args = "--session niri";
-  };
+  #    greeter-args = "--session niri";
+  #  };
 
   xdg = {
     mime.defaultApplications = {
@@ -122,6 +122,8 @@
     alsa.support32Bit = true;
     pulse.enable = true;
   };
+
+  programs.mango.enable = true;
 
   nix.settings = {
     extra-substituters = [ "https://noctalia.cachix.org" ];

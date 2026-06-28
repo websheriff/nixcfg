@@ -2,7 +2,8 @@
   imports = [
     ../common
     ./niri
-    ./noctalia
+    #./noctalia
+    ../dms.nix
     #    ./cli/cli.nix
     ./cli/fish.nix
     ./configuration.nix
