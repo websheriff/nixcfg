@@ -108,7 +108,7 @@
         "zen.view.compact.hide-tabbar" = true;
         "zen.view.compact.hide-toolbar" = true;
         "zen.view.compact.animate-sidebar" = true;
-        "zen.view.user-single-toolbar" = false;
+        "zen.view.use-single-toolbar" = false;
         "zen.welcome-screen.seen" = true;
         "zen.urlbar.behavior" = "float";
         "ui.systemUsesDarkTheme" = 1;
