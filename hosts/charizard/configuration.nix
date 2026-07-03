@@ -81,22 +81,6 @@
     signal-desktop
   ];
 
-  #  programs.noctalia-greeter = {
-  #    enable = true;
-  #    package = inputs.noctalia-greeter.packages.${pkgs.stdenv.hostPlatform.system}.default;
-
-  #    greeter-args = "--session niri";
-  #  };
-
-  xdg = {
-    mime.defaultApplications = {
-      "inode/directory" = [ "nemo.desktop" ];
-      "application/x-gnome-saved-search" = [ "nemo.desktop" ];
-    };
-  };
-
-  services.gvfs.enable = true;
-
   environment.variables.EDITOR = "helix";
 
   services.openssh.enable = true;

@@ -11,5 +11,6 @@
     ./disko.nix
     ./steam.nix
     ./stylix.nix
+    ../common/thunar.nix
   ];
 }
