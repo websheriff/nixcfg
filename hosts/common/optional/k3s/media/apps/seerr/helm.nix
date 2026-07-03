@@ -14,8 +14,31 @@
         targetNamespace: media
         createNamespace: false
         valuesContent: |
+          extraEnv:
+            - name: TZ
+              value: America/Chicago
+            - name: DB_TYPE
+              value: postgres
+            - name: DB_NAME
+              value: seerr
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  key: host
+                  name: seerr-db
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  key: username
+                  name: seerr-db
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: seerr-db
+                  
           persistence:
-            size: 2Gi
+            size: 1Gi
             storageClass: "local-path"
 
           resources:
