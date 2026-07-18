@@ -1,7 +1,7 @@
 { ... }: {
 
   imports = [
-    ./deployment.nix
+    ./helm.nix
     ./secret.nix
   ];
 }
