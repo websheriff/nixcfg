@@ -10,5 +10,10 @@
         dnsZoneRef:
           name: ${config.sops.placeholder."admin/prod-domain"}
     '';
+
+    path = "/var/lib/rancher/k3s/server/manifests/netbird-network-router.yaml";
+    owner = "root";
+    group = "root";
+    mode = "0644";
   };
 }
