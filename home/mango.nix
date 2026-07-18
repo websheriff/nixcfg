@@ -7,12 +7,13 @@
     enable = true;
 
     extraConfig = ''
-      monitorrule=name:^DP-1$,width:3440,height:1440,refresh:164.900,x:1080,y:0,scale:1.25,vrr:0
+      monitorrule=name:^DP-1$,width:3440,height:1440,refresh:164.900,x:1080,y:0,scale:1.0,vrr:0
       monitorrule=name:^DP-2$,width:1920,height:1080,refresh,165.00,x:0,y:0,scale:1.0,rr:1,vrr:0
     '';
 
     settings = {
       exec-once = [
+        "xprop -root -f _XWAYLAND_GLOBAL_OUTPUT_SCALE 32c -set _XWAYLAND_GLOBAL_OUTPUT_SCALE 1"
         "dbus-update-activation-environment --systemd WAYLAND_DISPLAY_DESKTOP XDG_SESSION_TYPE XDG_SESSION_DESKTOP"
         "systemctl --user import-environment PATH XDG_SESSION_TYPE XDG_SESSION_DESKTOP"
         "systemctl --user start mango-session.target"
@@ -49,6 +50,12 @@
       windowrule = [
         #Float DMS Windows
         "isfloating:1,appid:^org\.quickshell$"
+
+        #Games
+        #"isfullscreen:1,force_tearing:1,width:3440,height:1440,title:Path of Exile 2"
+
+        #Send to second monitor
+        "monitor:DP-2,appid:discord"
       ];
 
       bind = [
@@ -142,9 +149,9 @@
         "SUPER+ALT,Down,resizewin,0,20"
 
         # Screenshots
-        "NONE,Print,spawn,grimshot save area"
-        "Ctrl,Print,spawn,grimshot save screen"
-        "Alt,Print,spawn,grimshot save active"
+        "NONE,Print,spawn,grim -g \"$(slurp)\" $HOME/Pictures/Screenshots/Screenshot_$(date +%Y%m%d%H%M%S).png"
+        "Ctrl,Print,spawn,grim $HOME/Pictures/Screenshots/Screenshot_$(date +%Y%m%d%H%M%S).png"
+        "Alt,Print,spawn,grim save active"
       ];
 
       tagrule = [
@@ -179,7 +186,7 @@
       QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
       #QT_QPA_PLATFORMTHEME = "gtk3";
       ELECTRON_OZONE_PLATFORM_HINT = "auto";
-      SDL_VIDEODRIVER = "wayland";
+      SDL_VIDEODRIVER = "wayland,x11";
       CLUTTER_BACKEND = "wayland";
       GDK_BACKEND = "wayland,x11";
       XDG_SESSION_TYPE = "wayland";
