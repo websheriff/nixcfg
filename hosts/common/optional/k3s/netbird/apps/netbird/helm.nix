@@ -1,5 +1,5 @@
 { config, ... }: {
-  sops.templates."netbird/netbird-operator-helm" = {
+  sops.templates."netbird/netbird-operator-helm.yaml" = {
     content = ''
       apiVersion: helm.cattle.io/v1
       kind: HelmChart
@@ -20,7 +20,7 @@
               key: "access-token"
     '';
   
-    path = "/var/lib/rancher/k3s/server/manifests/netbird-operator-helm";
+    path = "/var/lib/rancher/k3s/server/manifests/netbird-operator-helm.yaml";
     owner = "root";
     group = "root";
     mode = "0644";
