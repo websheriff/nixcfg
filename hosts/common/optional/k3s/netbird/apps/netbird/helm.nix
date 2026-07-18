@@ -1,5 +1,5 @@
 { ... }: {
-  services.k3s.autoDeployCharts = {
+  services.k3s.autoDeployCharts.netbird-operator = {
     name = "netbird-operator";
     repo = "oci://ghcr.io/netbirdio/helm-charts/netbird-operator";
     hash = "sha256-9mUW6gNwoN2SWc/l0fW4svPNOulXLl8ijqKyeSOGgJE%3D";
