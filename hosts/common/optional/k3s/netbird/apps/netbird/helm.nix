@@ -12,7 +12,7 @@
         targetNamespace: netbird
         createNamespace: false
         valuesContent: |
-          managementURL: "${config.sops.placeholder."netbird/domain"}"
+          managementURL: "https://${config.sops.placeholder."netbird/domain"}"
           
           netbirdAPI:
             keyFromSecret:
