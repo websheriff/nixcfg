@@ -183,35 +183,6 @@ in
         comments.comment-nvim.enable = true;
         notes.todo-comments.enable = true;
 
-        filetree.nvimTree = {
-          enable = true;
-          openOnSetup = false;
-
-          setupOpts = {
-            view = {
-              width = 35;
-              side = "left";
-            };
-
-            renderer = {
-              group_empty = true;
-              indent_markers.enable = true;
-            };
-
-            filters = {
-              dotfiles = false;
-              git_ignored = true;
-            };
-
-            git.enable = true;
-
-            update_focused_file = {
-              enable = true;
-              update_root = true;
-            };
-          };
-        };
-
         statusline.lualine = {
           enable = true;
           theme = "auto";
@@ -308,9 +279,9 @@ in
                 }
                 {
                   icon = " ";
-                  desc = "File tree";
+                  desc = "File explorer";
                   key = "e";
-                  action = "NvimTreeToggle";
+                  action = "Yazi";
                 }
                 {
                   icon = " ";
@@ -325,14 +296,9 @@ in
         };
 
         utility = {
-          oil-nvim = {
+          yazi-nvim = {
             enable = true;
-            setupOpts = {
-              columns = [ "icon" "permission" "size" ];
-              view = {
-                show_hidden = true;
-              };
-            };
+            setupOpts.open_for_directories = true;
           };
 
           surround.enable = true;

@@ -52,7 +52,7 @@
   {
     mode = "n";
     key = "<leader>ee";
-    action = "<cmd>NvimTreeToggle<CR>";
+    action = "<cmd>Yazi<CR>";
     desc = "Toggle file explorer";
   }
   {
