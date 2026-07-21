@@ -20,3 +20,4 @@
       "ntfy/database/password" = { };
     };
   };
+}

@@ -1,5 +1,6 @@
 { ... }: {
   imports = [
+    ./configmap.nix
     ./deployment.nix
     ./service.nix
     ./secret.nix

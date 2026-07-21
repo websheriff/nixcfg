@@ -14,27 +14,12 @@
         template:
           metadata:
             labels:
-              app:ntfy
+              app: ntfy
           spec:
             containers:
               - name: ntfy
                 image: binwiederhier/ntfy:v2.25.0
                 args: ["serve"]
-                env:
-                  - name: NTFY_BASE_URL
-                    value: "https://${config.sops.placeholder."ntfy/domain"}"
-                  - name: NTFY_BEHIND_PROXY
-                    value: "true"
-                  - name: NTFY_DATABASE_URL
-                    value: "${config.sops.placeholder."ntfy/database/url"}"
-                  - name: NTFY_AUTH_DEFAULT_ACCESS
-                    value: "deny-all"
-                  - name: NTFY_ENABLE_LOGIN
-                    value: "true"
-                  - name: NTFY_REQUIRE_LOGIN
-                    value: "true"
-                  - name: NTFY_ATTACHMENT_CACHE_DIR
-                    value: "/var/lib/ntfy/attachments"
                 ports:
                   - containerPort: 80
                     name: http
@@ -46,9 +31,15 @@
                     cpu: 100m
                     memory: 128Mi
                 volumeMounts:
+                  - name: config
+                    mountPath: /etc/ntfy
+                    readOnly: true
                   - name: attachments
                     mountPath: /var/lib/ntfy/attachments
             volumes:
+              - name: config
+                configMap:
+                  name: ntfy
               - name: attachments
                 persistentVolumeClaim:
                   claimName: ntfy-attachments-pvc

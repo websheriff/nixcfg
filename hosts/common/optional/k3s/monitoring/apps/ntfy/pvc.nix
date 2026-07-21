@@ -11,7 +11,7 @@
       accessModes = [ "ReadWriteOnce" ];
       storageClassName = "local-path";
       resources = {
-        requests.storage = "2Gi";
+        requests.storage = "5Gi";
       };
     };
   };
