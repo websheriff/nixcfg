@@ -9,5 +9,6 @@
     ./authentication
     ./netbird
     ./cicd
+    ./monitoring
   ];
 }
