@@ -1,8 +1,10 @@
-{ inputs, pkgs, ... }:
-let
-  keymaps = import ./keymaps.nix;
-in
 {
+  inputs,
+  pkgs,
+  ...
+}: let
+  keymaps = import ./keymaps.nix;
+in {
   imports = [
     inputs.nvf.homeManagerModules.default
   ];
@@ -86,7 +88,7 @@ in
                     "Normal", "NonText", "SignColumn", "FoldColumn",
                     "NormalFloat", "NvimTreeNormal", "NvimTreeEndOfBuffer"
                   }
-                  
+
                   for _, group in ipairs(groups) do
                     vim.api.nvim_set_hl(0, group, { bg = dark_bg })
                   end
@@ -116,7 +118,11 @@ in
           };
         };
 
-        lsp.enable = true;
+        lsp = {
+          enable = true;
+          formatOnSave = true;
+        };
+
         languages = {
           enableTreesitter = true;
 
@@ -124,11 +130,11 @@ in
             enable = true;
             lsp = {
               enable = true;
-              servers = [ "nixd" ];
+              servers = ["nixd"];
             };
             format = {
               enable = true;
-              type = [ "nixfmt" ];
+              type = ["alejandra"];
             };
           };
 
@@ -201,7 +207,7 @@ in
           extensions = [
             {
               name = "fzf";
-              packages = [ pkgs.vimPlugins.telescope-fzf-native-nvim ];
+              packages = [pkgs.vimPlugins.telescope-fzf-native-nvim];
               setup = {
                 fzf = {
                   fuzzy = true;
@@ -247,16 +253,16 @@ in
             theme = "doom";
             config = {
               header = [
-	              "                                                                       "
-	              "                                                                     "
-	              "       ████ ██████           █████      ██                     "
-	              "      ███████████             █████                             "
-	              "      █████████ ███████████████████ ███   ███████████   "
-	              "     █████████  ███    █████████████ █████ ██████████████   "
-	              "    █████████ ██████████ █████████ █████ █████ ████ █████   "
-	              "  ███████████ ███    ███ █████████ █████ █████ ████ █████  "
-	              " ██████  █████████████████████ ████ █████ █████ ████ ██████ "
-	              "                                                                       "
+                "                                                                       "
+                "                                                                     "
+                "       ████ ██████           █████      ██                     "
+                "      ███████████             █████                             "
+                "      █████████ ███████████████████ ███   ███████████   "
+                "     █████████  ███    █████████████ █████ ██████████████   "
+                "    █████████ ██████████ █████████ █████ █████ ████ █████   "
+                "  ███████████ ███    ███ █████████ █████ █████ ████ █████  "
+                " ██████  █████████████████████ ████ █████ █████ ████ ██████ "
+                "                                                                       "
               ];
               header_h1 = [
                 "DashboardGrad1"
@@ -290,7 +296,7 @@ in
                   action = "qa";
                 }
               ];
-              footer = [ "Tip: press ? for which-key" ];
+              footer = ["Tip: press ? for which-key"];
             };
           };
         };
@@ -304,7 +310,7 @@ in
           surround.enable = true;
         };
 
-        theme.enable = false; 
+        theme.enable = false;
       };
     };
   };
