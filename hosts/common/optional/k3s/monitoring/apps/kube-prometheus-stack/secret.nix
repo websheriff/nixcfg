@@ -12,7 +12,7 @@
           stringData:
             auth.yml: |
               baseurl: "${config.sops.placeholder."ntfy/domain"}"
-              token: "${config.sops.placeholder."ntfy/alertmanager-token"}"
+              token: "${config.sops.placeholder."grafana/alert-manager/ntfy-token"}"
         '';
 
         path = "/var/lib/rancher/k3s/server/manifests/alertmanager-ntfy-auth.yaml";
@@ -50,11 +50,12 @@
             namespace: monitoring
           type: Opaque
           stringData:
-            GF_CLIENT_ID: "${config.sops.placeholder."grafana/sso/client-id"}"
-            GF_CLIENT_SECRET: "${config.sops.placeholder."grafana/sso/client-secret"}"
-            GF_DB_HOST: "${config.sops.placeholder."grafana/database/host"}"
-            GF_DB_USER: "${config.sops.placeholder."grafana/database/user"}"
-            GF_DB_PASSWORD: "${config.sops.placeholder."grafana/database/password"}"
+            GF_AUTH_GENERIC_OAUTH_CLIENT_ID: "${config.sops.placeholder."grafana/sso/client-id"}"
+            GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET: "${config.sops.placeholder."grafana/sso/client-secret"}"
+            GF_DATABASE_HOST: "${config.sops.placeholder."grafana/database/host"}"
+            GF_DATABASE_USER: "${config.sops.placeholder."grafana/database/user"}"
+            GF_DATABASE_PASSWORD: "${config.sops.placeholder."grafana/database/password"}"
+            GF_RENDERING_RENDERER_TOKEN: "${config.sops.placeholder."grafana/renderer-token"}"
         '';
 
         path = "/var/lib/rancher/k3s/server/manifests/grafana-secret.yaml";

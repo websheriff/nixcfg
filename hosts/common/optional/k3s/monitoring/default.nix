@@ -1,6 +1,6 @@
 { ... }: {
   imports = [
-    #./apps/kube-prometheus-stack
+    ./apps/kube-prometheus-stack
     ./apps/ntfy
   ];
 
@@ -18,6 +18,15 @@
       "ntfy/database/host" = { };
       "ntfy/database/user" = { };
       "ntfy/database/password" = { };
+
+      "grafana/domain" = { };
+      "grafana/sso/client-id" = { };
+      "grafana/sso/client-secret" = { };
+      "grafana/database/host" = { };
+      "grafana/database/user" = { };
+      "grafana/database/password" = { };
+      "grafana/alert-manager/ntfy-token" = { };
+      "grafana/renderer-token" = { };
     };
   };
 }

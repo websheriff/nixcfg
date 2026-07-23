@@ -13,7 +13,7 @@
         - match: Host(`${config.sops.placeholder."grafana/domain"}`)
           kind: Rule
           services:
-            - name: grafana-svc
+            - name: kube-prometheus-stack-grafana
               port: 3000
     '';
 

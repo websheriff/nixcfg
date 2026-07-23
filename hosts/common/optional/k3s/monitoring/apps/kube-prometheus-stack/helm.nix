@@ -9,7 +9,7 @@
       spec:
         repo: https://prometheus-community.github.io/helm-charts
         chart: kube-prometheus-stack
-        version: "86.2.3"
+        version: "87.18.1"
         targetNamespace: monitoring
         createNamespace: false
         valuesContent: |
@@ -25,9 +25,11 @@
             disabled:
               Watchdog: true
               InfoInhibitor: true
-
+            
           prometheusOperator:
             admissionWebhooks:
+              enabled: false
+            tls:
               enabled: false
 
           alertmanager:
@@ -41,7 +43,7 @@
                 - name: alertmanager-ntfy
                   image: ghcr.io/alexbakker/alertmanager-ntfy:1.2.1
                   args:
-                    - "--configs=/etc/alertmanager-ntfy/config.yml,/etc/alertmanager-nfty-auth/auth.yml
+                    - "--configs=/etc/alertmanager-ntfy/config.yml,/etc/alertmanager-nfty-auth/auth.yml"
                   volumeMounts:
                     - name: config
                       mountPath: /etc/alertmanager-ntfy
@@ -108,7 +110,6 @@
               image:
                 tag: 2.8.0
             service:
-              name: grafna-svc
               type: LoadBalancer
               port: 3000
               annotations:
@@ -118,11 +119,13 @@
                 label: grafana-dashboard
                 labelValue: "1"
                 searchNamespace: monitoring
-            envFromSecret: "grafana-secret"
             env:
               GF_RENDERING_SERVER_URL: "http://grafana-image-renderer.monitoring.svc.cluster.local:8081/render"
               GF_RENDERING_CALLBACK_URL: "http://kube-prometheus-stack-grafana.monitoring.svc.cluster.local:32000/"
 
+            envFromSecret: grafana-secret
+            assertNoLeakedSecrets: false
+                             
             grafana.ini:
               server:
                 root_url: "https://${config.sops.placeholder."grafana/domain"}"
@@ -134,18 +137,13 @@
                 name: "SSO"
                 allow_sign_up: true
                 allow_assign_grafana_admin: true
-                client_id: "$GF_CLIENT_ID"
-                client_secret: "$GF_CLIENT_SECRET"
                 scopes: "openid profile email groups"
-                auth_url: "https://${config.sops.placeholder."grafana/domain"}/authorize"
-                token_url: "https://${config.sops.placeholder."grafana/domain"}/api/oidc/token"
-                api_url: "https://${config.sops.placeholder."grafana/domain"}/api/oidc/userinfo"
-                jwk_set_url: "https://${config.sops.placeholder."grafana/domain"}/.well-known/jwks.json"
+                auth_url: "https://${config.sops.placeholder."pocketid/domain"}/authorize"
+                token_url: "https://${config.sops.placeholder."pocketid/domain"}/api/oidc/token"
+                api_url: "https://${config.sops.placeholder."pocketid/domain"}/api/oidc/userinfo"
+                jwk_set_url: "https://${config.sops.placeholder."pocketid/domain"}/.well-known/jwks.json"
               database:
                 type: postgres
-                host: "$GF_DB_HOST"
-                user: "$GF_DB_USER"
-                password: "$GF_DB_PASSWORD"
 
     '';
 
