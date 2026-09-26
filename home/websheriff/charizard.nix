@@ -1,5 +1,4 @@
-{ pkgs, ... }: {
-
+{pkgs, ...}: {
   imports = [
     ./home.nix
     #../core
@@ -10,6 +9,7 @@
     #../vicinae.nix
     #../noctalia.nix
     ../mango.nix
+    ../neovim
   ];
 
   features = {
@@ -21,6 +21,7 @@
 
   home.packages = with pkgs; [
     prismlauncher
+    ungoogled-chromium
   ];
 
   stylix.targets.helix.enable = false;

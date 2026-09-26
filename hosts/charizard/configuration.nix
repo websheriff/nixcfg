@@ -1,5 +1,8 @@
-{ inputs, pkgs, ... }: {
-
+{
+  inputs,
+  pkgs,
+  ...
+}: {
   imports = [
     inputs.noctalia-greeter.nixosModules.default
     inputs.mangowm.nixosModules.mango
@@ -53,8 +56,8 @@
     nftables.enable = true;
 
     firewall = {
-      allowedTCPPorts = [ ];
-      allowedUDPPorts = [ ];
+      allowedTCPPorts = [];
+      allowedUDPPorts = [];
     };
   };
 
@@ -66,14 +69,13 @@
     helix
     git
     libreoffice
-    nemo-with-extensions
-    nemo-preview
     loupe
     papers
     inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
     sops
     xwayland-satellite
     wl-clipboard
+    netbird-ui
   ];
 
   users.users.websheriff.packages = with pkgs; [
@@ -81,7 +83,7 @@
     signal-desktop
   ];
 
-  environment.variables.EDITOR = "helix";
+  environment.variables.EDITOR = "hx";
 
   services.openssh.enable = true;
 
@@ -107,10 +109,13 @@
     pulse.enable = true;
   };
 
+  services.netbird.enable = true;
+
   programs.mango.enable = true;
+  programs.hyprland.enable = true;
 
   nix.settings = {
-    extra-substituters = [ "https://noctalia.cachix.org" ];
+    extra-substituters = ["https://noctalia.cachix.org"];
     extra-trusted-public-keys = [
       "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
     ];
@@ -121,5 +126,4 @@
     "flakes"
   ];
   system.stateVersion = "25.11";
-
 }
