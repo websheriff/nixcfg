@@ -5,7 +5,7 @@
       apiVersion: helm.cattle.io/v1
       kind: HelmChart
       metadata:
-        name: pocketid
+        name: jellyfin
         namespace: kube-system
       spec:
         repo: https://jellyfin.github.io/jellyfin-helm/
