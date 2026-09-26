@@ -1,5 +1,4 @@
-{ config, ... }: {
-
+{config, ...}: {
   sops.templates."pocketid/pocketid-helm.yaml" = {
     content = ''
       apiVersion: helm.cattle.io/v1
@@ -17,7 +16,7 @@
           host: "${config.sops.placeholder."pocketid/domain"}"
 
           timeZone: "America/Chicago"
-          
+
           config:
             ui:
               settings:
