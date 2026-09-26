@@ -23,6 +23,7 @@
     plugins = {
       dankKDEConnect.enable = true;
       discordVoice.enable = true;
+      netbirdStatus.enable = true;
     };
   };
 
