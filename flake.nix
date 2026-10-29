@@ -125,5 +125,16 @@
         ];
       };
     };
+    nixosConfigurations = {
+      galar = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs outputs;};
+        modules = [
+          ./hosts/galar
+          disko.nixosModules.disko
+          impermanence.nixosModules.impermanence
+          sops-nix.nixosModules.sops
+        ];
+      };
+    };
   };
 }

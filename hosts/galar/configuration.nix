@@ -28,17 +28,20 @@
   users.manageLingering = true;
   users.users.pangolin = {
     isSystemUser = true;
+    group = "pangolin";
     linger = true;
     home = "/var/lib/pangolin";
     createHome = true;
     autoSubUidGidRange = true;
   };
 
+  users.groups.pangolin = {};
+
   networking = {
     networkmanager.enable = false;
     useDHCP = false;
 
-    interfaces.eno0 = {
+    interfaces.ens3 = {
       useDHCP = false;
 
       ipv4.addresses = [
@@ -63,7 +66,7 @@
       "149.112.112.112#dns.quad9.net"
     ];
 
-    nftables.enable = true;
+    #nftables.enable = true;
 
     firewall = {
       enable = true;

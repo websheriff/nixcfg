@@ -1,4 +1,6 @@
-{
+{config, ...}: {
+  sops.secrets."pangolin/crowdsec/enroll-key" = {};
+
   home-manager.users.pangolin = {pkgs, ...}: let
     ratelimit = pkgs.writeText "ratelimit.yml" ''
       http:
@@ -117,19 +119,6 @@
         insecureSkipVerify: true
       ping:
         entryPoint: web
-    '';
-
-    lapiExportScript = pkgs.writeText "lapi-export.py" ''
-      import os
-      import time
-      import urllib.request
-
-      creds_path = "/etc/crowdsec/local_api_credentials.yaml"
-      print(f"Waiting for CrowdSec credentials file at {creds_path}...")
-      while not os.path.exists(creds_path):
-          time.sleep(2)
-      print("Credentials file found. Starting exporter logic...")
-      # Add your downstream exporter execution loop or script contents here
     '';
   in {
     home.stateVersion = "25.11";
@@ -263,7 +252,7 @@
           ENROLL_INSTANCE_NAME = "pangolin-crowdsec";
           ENROLL_TAGS = "docker";
         };
-        environmentFile = ["/run/secrets/pangolin.crowdsec.env"];
+        environmentFile = [config.sops.templates."pangolin.crowdsec.env".path];
         extraConfig = {
           Container = {
             DropCapability = "ALL";
@@ -373,12 +362,10 @@
     };
   };
 
-  sops.secrets."pangolin.crowdsec.env" = {
-    sopsFile = ../../secrets/pangolin.crowdsec.env;
-    format = "binary";
-    owner = "pangolin";
-    group = "pangolin";
-    mode = "0400";
+  sops.templates."pangolin.crowdsec.env" = {
+    content = ''
+      ENROLL_KEY=${config.sops.placeholder."pangolin/crowdsec/enroll-key"}
+    '';
   };
 
   networking.firewall.allowedTCPPorts = [
