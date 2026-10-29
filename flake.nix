@@ -26,16 +26,12 @@
       url = "github:mangowm/mango";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    noctalia = {
-      url = "github:noctalia-dev/noctalia";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    noctalia-greeter = {
-      url = "github:noctalia-dev/noctalia-greeter";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     dms = {
       url = "github:AvengeMedia/DankMaterialShell/stable";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    dank-greeter = {
+      url = "github:AvengeMedia/dank-greeter";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     dms-plugin-registry = {
@@ -46,11 +42,6 @@
       url = "github:0xc000022070/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
-    };
-    vicinae.url = "github:vicinaehq/vicinae";
-    vicinae-extensions = {
-      url = "github:vicinaehq/extensions";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
     stylix = {
       url = "github:nix-community/stylix/release-26.05";
@@ -67,75 +58,72 @@
     };
   };
 
-  outputs =
-    {
-      self,
-      sops-nix,
-      flake-parts,
-      nixpkgs,
-      disko,
-      impermanence,
-      home-manager,
-      vicinae,
-      stylix,
-      hermes-agent,
-      comin,
-      nvf,
-      ...
-    }@inputs:
-    let
-      inherit (self) outputs;
-      systems = [
-        "x86_64-linux"
-      ];
-      forAllSystems = nixpkgs.lib.genAttrs systems;
-    in
-    {
-      packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
-      homeManagerModules = import ./modules/home-manager;
+  outputs = {
+    self,
+    sops-nix,
+    flake-parts,
+    nixpkgs,
+    disko,
+    impermanence,
+    home-manager,
+    stylix,
+    hermes-agent,
+    comin,
+    nvf,
+    dank-greeter,
+    ...
+  } @ inputs: let
+    inherit (self) outputs;
+    systems = [
+      "x86_64-linux"
+    ];
+    forAllSystems = nixpkgs.lib.genAttrs systems;
+  in {
+    packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
+    homeManagerModules = import ./modules/home-manager;
 
-      nixosConfigurations = {
-        charizard = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs; };
-          modules = [
-            ./hosts/charizard
-            disko.nixosModules.disko
-            sops-nix.nixosModules.sops
-            vicinae.nixosModules.default
-            stylix.nixosModules.stylix
-          ];
-        };
-      };
-      nixosConfigurations = {
-        kanto = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs; };
-          modules = [
-            ./hosts/kanto
-            sops-nix.nixosModules.sops
-            hermes-agent.nixosModules.default
-          ];
-        };
-      };
-      nixosConfigurations = {
-        snorlax = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs; };
-          modules = [
-            ./hosts/snorlax
-            disko.nixosModules.disko
-            sops-nix.nixosModules.sops
-          ];
-        };
-      };
-      nixosConfigurations = {
-        sevii01 = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs; };
-          modules = [
-            ./hosts/sevii01
-            disko.nixosModules.disko
-            impermanence.nixosModules.impermanence
-            sops-nix.nixosModules.sops
-          ];
-        };
+    nixosConfigurations = {
+      charizard = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs outputs;};
+        modules = [
+          ./hosts/charizard
+          disko.nixosModules.disko
+          sops-nix.nixosModules.sops
+          stylix.nixosModules.stylix
+          dank-greeter.nixosModules.default
+        ];
       };
     };
+    nixosConfigurations = {
+      kanto = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs outputs;};
+        modules = [
+          ./hosts/kanto
+          sops-nix.nixosModules.sops
+          hermes-agent.nixosModules.default
+        ];
+      };
+    };
+    nixosConfigurations = {
+      snorlax = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs outputs;};
+        modules = [
+          ./hosts/snorlax
+          disko.nixosModules.disko
+          sops-nix.nixosModules.sops
+        ];
+      };
+    };
+    nixosConfigurations = {
+      sevii01 = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs outputs;};
+        modules = [
+          ./hosts/sevii01
+          disko.nixosModules.disko
+          impermanence.nixosModules.impermanence
+          sops-nix.nixosModules.sops
+        ];
+      };
+    };
+  };
 }
