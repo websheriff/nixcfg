@@ -1,4 +1,8 @@
-{ inputs, pkgs, ... }: {
+{
+  inputs,
+  pkgs,
+  ...
+}: {
   imports = [
     inputs.mangowm.hmModules.mango
   ];
@@ -7,12 +11,12 @@
     enable = true;
 
     extraConfig = ''
-      monitorrule=name:^DP-1$,width:3440,height:1440,refresh:164.900,x:1080,y:0,scale:1.0,vrr:0
-      monitorrule=name:^DP-2$,width:1920,height:1080,refresh,165.00,x:0,y:0,scale:1.0,rr:1,vrr:0
+      monitor_rule=name:^DP-1$,width:3440,height:1440,refresh:164.900,x:1080,y:0,scale:1.0,vrr:0
+      monitor_rule=name:^DP-2$,width:1920,height:1080,refresh:165.00,x:0,y:0,scale:1.0,rr:1,vrr:0
     '';
 
     settings = {
-      exec-once = [
+      exec_once = [
         "xprop -root -f _XWAYLAND_GLOBAL_OUTPUT_SCALE 32c -set _XWAYLAND_GLOBAL_OUTPUT_SCALE 1"
         "dbus-update-activation-environment --systemd WAYLAND_DISPLAY_DESKTOP XDG_SESSION_TYPE XDG_SESSION_DESKTOP"
         "systemctl --user import-environment PATH XDG_SESSION_TYPE XDG_SESSION_DESKTOP"
@@ -20,7 +24,7 @@
       ];
 
       xwayland_persistence = 1;
-      sloppyfocus = 1;
+      sloppy_focus = 1;
 
       # Window effects
       blur = 1;
@@ -34,7 +38,7 @@
       unfocused_opacity = 0.9;
 
       border_radius = 12;
-      borderpx = 4;
+      border_px = 4;
 
       animations = 1;
       animation_type_open = "slide";
@@ -42,20 +46,20 @@
 
       new_is_master = 1;
 
-      layerrule = [
+      layer_rule = [
         #No animations on DMS layers
-        "noanim:1,layer_name:^dms"
+        "no_animation:1,layer_name:^dms"
       ];
 
-      windowrule = [
+      window_rule = [
         #Float DMS Windows
-        "isfloating:1,appid:^org\.quickshell$"
+        "is_floating:1,app_id:^org\.quickshell$"
 
         #Games
         #"isfullscreen:1,force_tearing:1,width:3440,height:1440,title:Path of Exile 2"
 
         #Send to second monitor
-        "monitor:DP-2,appid:discord"
+        "monitor:DP-2,app_id:discord"
       ];
 
       bind = [
@@ -154,7 +158,7 @@
         "Alt,Print,spawn,grim save active"
       ];
 
-      tagrule = [
+      tag_rule = [
         "id:1,monitor_name:DP-1,layout_name:tile"
         "id:2,monitor_name:DP-1,layout_name:scroller"
         "id:3,monitor_name:DP-1,layout_name:tile"
