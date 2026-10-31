@@ -10,7 +10,7 @@
       spec:
         repo: https://gissilabs.github.io/charts/
         chart: vaultwarden
-        version: "1.4.0"
+        version: "1.4.1"
         targetNamespace: vaultwarden
         createNamespace: true
         valuesContent: |
