@@ -4,98 +4,98 @@
   pkgs,
   lib,
   ...
-}:
-{
+}: {
   imports = [
     inputs.zen-browser.homeModules.beta
   ];
 
-  stylix.targets.zen-browser.profileNames = [ "${config.home.username}" ];
+  stylix.targets.zen-browser.profileNames = ["${config.home.username}"];
 
   programs.zen-browser = {
     enable = true;
-    languagePacks = [ "en-US" ];
+    languagePacks = ["en-US"];
     setAsDefaultBrowser = true;
 
-    policies =
-      let
-        mkLockedAttrs = builtins.mapAttrs (
-          _: value: {
-            Value = value;
-            Status = "locked";
-          }
-        );
+    policies = let
+      mkLockedAttrs = builtins.mapAttrs (
+        _: value: {
+          Value = value;
+          Status = "locked";
+        }
+      );
 
-        mkPluginUrl = id: "https://addons.mozilla.org/firefox/downloads/latest/${id}/latest.xpi";
+      mkPluginUrl = id: "https://addons.mozilla.org/firefox/downloads/latest/${id}/latest.xpi";
 
-        mkExtensionEntry =
-          {
-            id,
-            pinned ? false,
-          }:
-          let
-            base = {
-              install_url = mkPluginUrl id;
-              installation_mode = "force_installed";
-            };
-          in
-          if pinned then base // { default_area = "navbar"; } else base;
-
-        mkExtensionSettings = builtins.mapAttrs (
-          _: entry: if builtins.isAttrs entry then entry else mkExtensionEntry { id = entry; }
-        );
+      mkExtensionEntry = {
+        id,
+        pinned ? false,
+      }: let
+        base = {
+          install_url = mkPluginUrl id;
+          installation_mode = "force_installed";
+        };
       in
-      {
-        AutofillAddressEnabled = false;
-        AutofillCreditCardEnabled = false;
-        DisableAppUpdate = true;
-        DisableFeedbackCommands = true;
-        DisableFirefoxStudies = true;
-        DisablePocket = true;
-        DisableTelemetry = true;
-        DontCheckDefaultBrowser = true;
-        NoDefaultBookmarks = true;
-        OfferToSaveLogins = false;
-        EnableTrackingProtection = {
-          Value = true;
-          Locked = true;
-          Cryptomining = true;
-          Fingerprinting = true;
-        };
-        SanitizeOnShutdown = {
-          FormData = true;
-          Cache = true;
-        };
-        ExtensionSettings = mkExtensionSettings {
+        if pinned
+        then base // {default_area = "navbar";}
+        else base;
 
-        };
-        Preferences = mkLockedAttrs {
-          "browser.aboutConfig.showWarning" = false;
-          "browser.tabs.warnOnClose" = false;
-          "media.videocontrols.picture-in-picture.video-toggle.enabled" = true;
-          # Disable swipe gestures (Browser:BackOrBackDuplicate, Browser:ForwardOrForwardDuplicate)
-          "browser.gesture.swipe.left" = "";
-          "browser.gesture.swipe.right" = "";
-          "browser.tabs.hoverPreview.enabled" = true;
-          "browser.newtabpage.activity-stream.feeds.topsites" = false;
-          "browser.topsites.contile.enabled" = false;
-
-          "privacy.resistFingerprinting" = true;
-          "privacy.resistFingerprinting.randomization.canvas.use_siphash" = true;
-          "privacy.resistFingerprinting.randomization.daily_reset.enabled" = true;
-          "privacy.resistFingerprinting.randomization.daily_reset.private.enabled" = true;
-          "privacy.resistFingerprinting.block_mozAddonManager" = true;
-          "privacy.spoof_english" = 1;
-
-          "privacy.firstparty.isolate" = true;
-          "network.cookie.cookieBehavior" = 5;
-          "dom.battery.enabled" = false;
-
-          "gfx.webrender.all" = true;
-          "network.http.http3.enabled" = true;
-          "network.socket.ip_addr_any.disabled" = true; # disallow bind to 0.0.0.0
-        };
+      mkExtensionSettings = builtins.mapAttrs (
+        _: entry:
+          if builtins.isAttrs entry
+          then entry
+          else mkExtensionEntry {id = entry;}
+      );
+    in {
+      AutofillAddressEnabled = false;
+      AutofillCreditCardEnabled = false;
+      DisableAppUpdate = true;
+      DisableFeedbackCommands = true;
+      DisableFirefoxStudies = true;
+      DisablePocket = true;
+      DisableTelemetry = true;
+      DontCheckDefaultBrowser = true;
+      NoDefaultBookmarks = true;
+      OfferToSaveLogins = false;
+      EnableTrackingProtection = {
+        Value = true;
+        Locked = true;
+        Cryptomining = true;
+        Fingerprinting = true;
       };
+      SanitizeOnShutdown = {
+        FormData = true;
+        Cache = true;
+      };
+      ExtensionSettings =
+        mkExtensionSettings {
+        };
+      Preferences = mkLockedAttrs {
+        "browser.aboutConfig.showWarning" = false;
+        "browser.tabs.warnOnClose" = false;
+        "media.videocontrols.picture-in-picture.video-toggle.enabled" = true;
+        # Disable swipe gestures (Browser:BackOrBackDuplicate, Browser:ForwardOrForwardDuplicate)
+        "browser.gesture.swipe.left" = "";
+        "browser.gesture.swipe.right" = "";
+        "browser.tabs.hoverPreview.enabled" = true;
+        "browser.newtabpage.activity-stream.feeds.topsites" = false;
+        "browser.topsites.contile.enabled" = false;
+
+        "privacy.resistFingerprinting" = true;
+        "privacy.resistFingerprinting.randomization.canvas.use_siphash" = true;
+        "privacy.resistFingerprinting.randomization.daily_reset.enabled" = true;
+        "privacy.resistFingerprinting.randomization.daily_reset.private.enabled" = true;
+        "privacy.resistFingerprinting.block_mozAddonManager" = true;
+        "privacy.spoof_english" = 1;
+
+        "privacy.firstparty.isolate" = true;
+        "network.cookie.cookieBehavior" = 5;
+        "dom.battery.enabled" = false;
+
+        "gfx.webrender.all" = true;
+        "network.http.http3.enabled" = true;
+        "network.socket.ip_addr_any.disabled" = true; # disallow bind to 0.0.0.0
+      };
+    };
 
     # Use legacy profile mode to avoid needing machine-specific Install identifier
     #home.sessionVariables.MOZ_LEGACY_PROFILES = "1";
@@ -114,7 +114,7 @@
         "ui.systemUsesDarkTheme" = 1;
       };
 
-      keyboardShortcutsVersion = 19; # pin to detect regressions
+      keyboardShortcutsVersion = 21; # pin to detect regressions
       keyboardShortcuts = [
         {
           id = "zen-compact-mode-toggle";
@@ -174,117 +174,115 @@
       search = {
         force = true;
         default = "ddg";
-        engines =
-          let
-            nixSnowflakeIcon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-          in
-          {
-            "Nix Packages" = {
-              urls = [
-                {
-                  template = "https://search.nixos.org/packages";
-                  params = [
-                    {
-                      name = "type";
-                      value = "packages";
-                    }
-                    {
-                      name = "channel";
-                      value = "unstable";
-                    }
-                    {
-                      name = "query";
-                      value = "{searchTerms}";
-                    }
-                  ];
-                }
-              ];
-              icon = nixSnowflakeIcon;
-              definedAliases = [ "p" ];
-            };
-
-            "Nix Options" = {
-              urls = [
-                {
-                  template = "https://search.nixos.org/options";
-                  params = [
-                    {
-                      name = "channel";
-                      value = "unstable";
-                    }
-                    {
-                      name = "query";
-                      value = "{searchTerms}";
-                    }
-                  ];
-                }
-              ];
-              icon = nixSnowflakeIcon;
-              definedAliases = [ "o" ];
-            };
-
-            "Home Manager Options" = {
-              urls = [
-                {
-                  template = "https://home-manager-options.extranix.com/";
-                  params = [
-                    {
-                      name = "query";
-                      value = "{searchTerms}";
-                    }
-                    {
-                      name = "release";
-                      value = "master";
-                    }
-                  ];
-                }
-              ];
-              icon = nixSnowflakeIcon;
-              definedAliases = [ "hm" ];
-            };
-
-            "Google Maps" = {
-              urls = [
-                {
-                  template = "http://maps.google.com";
-                  params = [
-                    {
-                      name = "q";
-                      value = "{searchTerms}";
-                    }
-                  ];
-                }
-              ];
-              definedAliases = [
-                "maps"
-                "gmaps"
-              ];
-            };
-
-            "DuckDuckGo" = {
-              urls = [
-                {
-                  template = "https://duckduckgo.com";
-                  params = [
-                    {
-                      name = "q";
-                      value = "{searchTerms}";
-                    }
-                    {
-                      name = "origin";
-                      value = "unknown";
-                    }
-                  ];
-                }
-              ];
-              definedAliases = [
-                "duck"
-                "ddg"
-              ];
-            };
-
-            bing.metaData.hidden = "true";
+        engines = let
+          nixSnowflakeIcon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+        in {
+          "Nix Packages" = {
+            urls = [
+              {
+                template = "https://search.nixos.org/packages";
+                params = [
+                  {
+                    name = "type";
+                    value = "packages";
+                  }
+                  {
+                    name = "channel";
+                    value = "unstable";
+                  }
+                  {
+                    name = "query";
+                    value = "{searchTerms}";
+                  }
+                ];
+              }
+            ];
+            icon = nixSnowflakeIcon;
+            definedAliases = ["p"];
           };
+
+          "Nix Options" = {
+            urls = [
+              {
+                template = "https://search.nixos.org/options";
+                params = [
+                  {
+                    name = "channel";
+                    value = "unstable";
+                  }
+                  {
+                    name = "query";
+                    value = "{searchTerms}";
+                  }
+                ];
+              }
+            ];
+            icon = nixSnowflakeIcon;
+            definedAliases = ["o"];
+          };
+
+          "Home Manager Options" = {
+            urls = [
+              {
+                template = "https://home-manager-options.extranix.com/";
+                params = [
+                  {
+                    name = "query";
+                    value = "{searchTerms}";
+                  }
+                  {
+                    name = "release";
+                    value = "master";
+                  }
+                ];
+              }
+            ];
+            icon = nixSnowflakeIcon;
+            definedAliases = ["hm"];
+          };
+
+          "Google Maps" = {
+            urls = [
+              {
+                template = "http://maps.google.com";
+                params = [
+                  {
+                    name = "q";
+                    value = "{searchTerms}";
+                  }
+                ];
+              }
+            ];
+            definedAliases = [
+              "maps"
+              "gmaps"
+            ];
+          };
+
+          "DuckDuckGo" = {
+            urls = [
+              {
+                template = "https://duckduckgo.com";
+                params = [
+                  {
+                    name = "q";
+                    value = "{searchTerms}";
+                  }
+                  {
+                    name = "origin";
+                    value = "unknown";
+                  }
+                ];
+              }
+            ];
+            definedAliases = [
+              "duck"
+              "ddg"
+            ];
+          };
+
+          bing.metaData.hidden = "true";
+        };
       };
     };
     # Open files with the browser
