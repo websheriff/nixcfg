@@ -11,7 +11,7 @@
           email: "${config.sops.placeholder."admin/emails/admin"}"
           server: https://acme-v02.api.letsencrypt.org/directory
           privateKeySecretRef:
-            name: letsencrypt
+            name: letsencrypt-prod
           solvers:
             - dns01:
                 cloudflare:
@@ -20,7 +20,7 @@
                     name: cloudflare-api-token
                     key: apiToken
     '';
-  
+
     path = "/var/lib/rancher/k3s/server/manifests/cert-manager-cluster-issuer.yaml";
     owner = "root";
     group = "root";
