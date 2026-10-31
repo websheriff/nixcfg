@@ -1,7 +1,10 @@
-{ inputs, pkgs, ... }: {
+{
+  inputs,
+  pkgs,
+  ...
+}: {
   imports = [
     inputs.dms-plugin-registry.nixosModules.default
-    inputs.dms.nixosModules.greeter
   ];
 
   programs.dms-shell = {
@@ -27,7 +30,7 @@
     };
   };
 
-  programs.dank-material-shell.greeter = {
+  programs.dms-greeter = {
     enable = true;
     compositor.name = "mango";
   };
