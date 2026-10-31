@@ -4,7 +4,6 @@
   ...
 }: {
   imports = [
-    inputs.noctalia-greeter.nixosModules.default
     inputs.mangowm.nixosModules.mango
   ];
 
@@ -71,11 +70,8 @@
     libreoffice
     loupe
     papers
-    inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
     sops
-    xwayland-satellite
     wl-clipboard
-    netbird-ui
   ];
 
   users.users.websheriff.packages = with pkgs; [
@@ -83,7 +79,7 @@
     signal-desktop
   ];
 
-  environment.variables.EDITOR = "hx";
+  environment.variables.EDITOR = "nvim";
 
   services.openssh.enable = true;
 
